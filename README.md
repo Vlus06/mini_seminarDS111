@@ -30,6 +30,10 @@ Mỗi dòng là một lần ghi nhận một cây: hoặc quan sát cộng đồ
 ├── data/                                # file CSV theo năm (kết quả của notebook 01–07)
 ├── vn_plants_gbif_2020_2026.csv         # dữ liệu gộp (kết quả của notebook 08)
 ├── vn_plants_clean.csv                  # dữ liệu sạch dùng cho dashboard (kết quả của notebook 09)
+├── dashboard.html                       # dashboard 3 trang, một file độc lập (dữ liệu nhúng sẵn)
+├── dashboard_template.html              # mẫu giao diện dashboard
+├── build_dashboard.py                   # sinh dashboard.html từ vn_plants_clean.csv
+├── assets/vn_provinces.json             # ranh giới 63 tỉnh (GADM 4.1, đã đơn giản hóa) cho bản đồ
 ├── make_notebooks.py                    # sinh notebook 01–08
 ├── make_eda_notebook.py                 # sinh notebook 09
 └── THIET_KE_MINISEMINAR.md              # thiết kế mini seminar: nguyên lý, kỹ thuật, dashboard, dàn ý
@@ -50,6 +54,8 @@ pip install requests pandas matplotlib seaborn jupyter
 Số liệu GBIF thay đổi theo thời gian, nên chạy lại có thể cho số bản ghi khác một chút.
 
 Muốn đổi khoảng năm hoặc cột thu thập: sửa `make_notebooks.py` rồi chạy `python make_notebooks.py`.
+
+Sinh lại dashboard sau khi có `vn_plants_clean.csv`: `python build_dashboard.py` (cần `pandas`, `requests`; lần đầu tải ranh giới tỉnh từ GADM). Mở `dashboard.html` bằng trình duyệt để xem.
 
 ## Quy trình xử lý
 
@@ -76,4 +82,4 @@ Muốn đổi khoảng năm hoặc cột thu thập: sửa `make_notebooks.py` r
 - [x] Thu thập và gộp dữ liệu
 - [x] Tiền xử lý và EDA
 - [x] Thiết kế mini seminar (xem `THIET_KE_MINISEMINAR.md`)
-- [ ] Dashboard (thiết kế 3 trang đã có, chưa dựng)
+- [x] Dashboard HTML 3 trang (`dashboard.html`, mở trực tiếp bằng trình duyệt, không cần cài gì)

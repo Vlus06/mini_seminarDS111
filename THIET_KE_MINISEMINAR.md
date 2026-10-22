@@ -109,7 +109,9 @@ Công cụ: **Power BI Desktop** (khớp bài giảng, có Python visual, dùng 
 | Top 12 tỉnh theo số bản ghi (bar ngang)                                   |
 +---------------------------------------------------------------------------+
 ```
-Thông điệp tiêu đề gợi ý: "Năm tỉnh thành đầu bảng chiếm khoảng 37% bản ghi" (1.972 + 1.618 + 1.042 + 999 + 772 trên 17.120).
+Thông điệp tiêu đề gợi ý: "Năm tỉnh thành đầu bảng chiếm khoảng 37% bản ghi" (1.972 + 1.618 + 1.042 + 999 + 772 trên 17.120). Trong `dashboard.html`, tiêu đề tính trên bản ghi có tỉnh nên hiện 41% (cùng tử số, mẫu số 15.750); khi báo cáo nên nói rõ mẫu số.
+
+Bản dựng thực tế ([dashboard.html](dashboard.html)): bản đồ ở trang 1 là choropleth theo tỉnh (thay cho hexbin) để bấm tỉnh lọc cả trang; trang 3 vẽ chấm cho bản ghi nguy cấp.
 
 ### Trang 2. Thời gian và nguồn (trả lời Q2, G2)
 

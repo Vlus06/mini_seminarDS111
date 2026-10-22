@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thực vật Việt Nam 2020–2026</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface: #fcfcfb; --card: #ffffff; --border: #e4e3df; --grid: #ecebe7;
+  --text: #0b0b0b; --text2: #52514e; --muted: #7a7974;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #b8b7b0; --crit: #d03b3b;
+  --map-empty: #efeeea; --map-line: #fcfcfb; --chip: #f1f0ed;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #222221; --border: #34332f; --grid: #2d2c29;
+    --text: #f0efec; --text2: #c3c2b7; --muted: #97968e;
+    --s1: #3987e5; --s2: #d95926; --s3: #6b6a64; --crit: #e66767;
+    --map-empty: #2a2a28; --map-line: #1a1a19; --chip: #2b2a28;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #1a1a19; --card: #222221; --border: #34332f; --grid: #2d2c29;
+  --text: #f0efec; --text2: #c3c2b7; --muted: #97968e;
+  --s1: #3987e5; --s2: #d95926; --s3: #6b6a64; --crit: #e66767;
+  --map-empty: #2a2a28; --map-line: #1a1a19; --chip: #2b2a28;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface); color: var(--text);
+  font: 14px/1.45 "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 20px 16px 40px; }
+header { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; justify-content: space-between; }
+h1 { font-size: 22px; margin: 0 0 2px; font-weight: 650; }
+.sub { color: var(--text2); margin: 0; }
+button, select { font: inherit; color: var(--text); }
+.btn { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.tabs { display: flex; gap: 4px; margin: 16px 0 12px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.tab { background: none; border: 0; padding: 10px 14px; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; margin-bottom: -1px; font-weight: 550; }
+.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--s1); }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-bottom: 14px; }
+.fgroup { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.flabel { color: var(--muted); font-size: 12px; margin-right: 2px; }
+.chip { border: 1px solid var(--border); background: var(--chip); border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: 12.5px; color: var(--text2); }
+.chip[aria-pressed="true"] { background: var(--s1); border-color: var(--s1); color: #fff; }
+select { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 5px 8px; max-width: 200px; }
+.active-prov { background: var(--card); border: 1px solid var(--s1); border-radius: 999px; padding: 3px 4px 3px 10px; font-size: 12.5px; display: none; align-items: center; gap: 6px; }
+.active-prov button { border: 0; background: var(--chip); border-radius: 999px; cursor: pointer; width: 20px; height: 20px; line-height: 18px; padding: 0; color: var(--text2); }
+.headline { font-size: 17px; font-weight: 600; margin: 4px 0 14px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.kpi { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.kpi .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--text2); font-size: 12.5px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.card h2 { font-size: 14px; margin: 0 0 2px; font-weight: 600; }
+.card .note { color: var(--muted); font-size: 12px; margin: 0 0 10px; }
+.span2 { grid-column: 1 / -1; }
+.hbar { display: grid; grid-template-columns: minmax(80px, 38%) 1fr auto; gap: 8px; align-items: center; padding: 2px 0; cursor: default; }
+.hbar.click { cursor: pointer; }
+.hbar .lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text2); font-size: 12.5px; }
+.hbar .track { height: 12px; }
+.hbar .fill { height: 12px; border-radius: 0 4px 4px 0; min-width: 2px; }
+.hbar .val { font-variant-numeric: tabular-nums; font-size: 12.5px; min-width: 38px; text-align: right; }
+.hbar.dim { opacity: .35; }
+.hbar.sel .lab { color: var(--text); font-weight: 600; }
+svg text { fill: var(--text2); font-size: 11px; font-family: inherit; }
+svg .val { fill: var(--text); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; font-size: 12.5px; color: var(--text2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+table.heat { border-collapse: separate; border-spacing: 2px; width: 100%; font-variant-numeric: tabular-nums; font-size: 12px; }
+table.heat th { font-weight: 500; color: var(--text2); text-align: left; padding: 2px 6px; white-space: nowrap; }
+table.heat th.c { text-align: center; }
+table.heat td { text-align: center; padding: 6px 2px; border-radius: 3px; min-width: 44px; }
+.heat tr.dim td, .heat tr.dim th { opacity: .35; }
+.heat tr.sel th { color: var(--text); font-weight: 650; }
+.heat .coldim { opacity: .35; }
+.mapwrap { display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.mapwrap svg { max-height: 560px; width: auto; height: 520px; max-width: 100%; }
+.ramp { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text2); }
+.ramp .bar { width: 120px; height: 10px; border-radius: 3px; }
+.ramp .ends { display: flex; justify-content: space-between; }
+path.prov { stroke: var(--map-line); stroke-width: .6; cursor: pointer; }
+path.prov:hover { stroke: var(--text); stroke-width: 1.2; }
+path.prov.sel { stroke: var(--text); stroke-width: 1.6; }
+#tip { position: fixed; pointer-events: none; background: var(--text); color: var(--surface); padding: 6px 9px; border-radius: 6px; font-size: 12px; z-index: 9; display: none; max-width: 260px; }
+footer { color: var(--muted); font-size: 12px; margin-top: 22px; line-height: 1.6; }
+.empty { color: var(--muted); padding: 16px 0; }
+@media (max-width: 560px) { .mapwrap svg { height: 400px; } .kpi .v { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Thực vật Việt Nam qua ống kính cộng đồng</h1>
+      <p class="sub">Dữ liệu GBIF 2020–2026 · <span id="subcount"></span></p>
+    </div>
+    <button class="btn" id="theme" aria-label="Đổi giao diện sáng/tối">Sáng / tối</button>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-page="1" aria-selected="true">1. Tổng quan</button>
+    <button class="tab" role="tab" data-page="2" aria-selected="false">2. Thời gian và nguồn</button>
+    <button class="tab" role="tab" data-page="3" aria-selected="false">3. Bảo tồn</button>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <section id="p1" class="page">
+    <div class="headline" id="h1t"></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="grid">
+      <div class="card"><h2>Số bản ghi theo tỉnh</h2><p class="note">Bấm một tỉnh để lọc cả trang. Màu càng đậm càng nhiều bản ghi.</p><div class="mapwrap" id="map1"></div></div>
+      <div style="display:grid;gap:14px;min-width:0;align-content:start">
+        <div class="card"><h2>Top 10 họ</h2><p class="note">Bấm một họ để lọc.</p><div id="fam"></div></div>
+        <div class="card"><h2>Top 10 loài</h2><p class="note">Chỉ tính bản ghi định danh đến loài.</p><div id="sp"></div></div>
+      </div>
+      <div class="card span2"><h2>Top 12 tỉnh theo số bản ghi</h2><p class="note">Bấm một thanh để lọc theo tỉnh.</p><div id="prov"></div></div>
+    </div>
+  </section>
+
+  <section id="p2" class="page" hidden>
+    <div class="headline" id="h2t"></div>
+    <div class="grid">
+      <div class="card"><h2>Số bản ghi theo năm</h2><p class="note">2026* chưa hết năm. Bấm cột để chọn năm.</p><div id="yr"></div></div>
+      <div class="card"><h2>Số bản ghi theo tháng</h2><p class="note">Gộp các năm đang chọn.</p><div id="mo"></div></div>
+      <div class="card"><h2>Cơ cấu loại bản ghi theo năm</h2>
+        <div class="legend"><span><i style="background:var(--s1)"></i>Quan sát</span><span><i style="background:var(--s2)"></i>Tiêu bản</span><span><i style="background:var(--s3)"></i>Khác</span></div>
+        <div id="src"></div></div>
+      <div class="card"><h2>Top 5 bộ dữ liệu nguồn</h2><p class="note">Mỗi bản ghi đến từ một bộ dữ liệu do một nơi cung cấp.</p><div id="ds"></div></div>
+      <div class="card span2"><h2>Top 10 tỉnh theo năm</h2><p class="note">Số bản ghi. Các đợt tăng vọt thường do một dự án ghi nhận tập trung, không phải xu hướng tự nhiên.</p><div id="heat" style="overflow-x:auto"></div></div>
+    </div>
+  </section>
+
+  <section id="p3" class="page" hidden>
+    <div class="headline" id="h3t"></div>
+    <div class="grid">
+      <div class="card"><h2>Nhóm mức độ bảo tồn (IUCN)</h2><p class="note">Nguy cấp gồm CR, EN, VU. Chưa đánh giá: loài chưa có trong danh mục IUCN.</p><div id="iu"></div></div>
+      <div class="card"><h2>Loài nguy cấp: top tỉnh</h2><p class="note">Bấm để lọc theo tỉnh.</p><div id="tprov"></div></div>
+      <div class="card"><h2>Loài nguy cấp: top họ</h2><p class="note">Số bản ghi nguy cấp theo họ.</p><div id="tfam"></div></div>
+      <div class="card"><h2>Vị trí các bản ghi nguy cấp</h2>
+        <p class="note">Chấm rỗng: sai số tọa độ trên 5 km (nhiều khả năng bị làm mờ có chủ ý). Chỉ cho biết khu vực chung.</p>
+        <div class="mapwrap" id="map3"></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>Nguồn:</b> GBIF (gbif.org), API occurrence/search, thực vật Việt Nam có tọa độ, thu ngày 22/10/2026. Giấy phép từng bản ghi nằm trong cột license (khoảng 60% là CC BY-NC 4.0).</div>
+    <div><b>Lưu ý:</b> mỗi dòng là một lần ghi nhận, không phải một cây. Số bản ghi phản ánh nơi có người đi ghi nhận chứ không phải nơi có nhiều cây. Đây là thực vật nói chung được cộng đồng ghi nhận, chưa phải thực vật rừng. Tỉnh theo ranh giới GADM cũ (63 tỉnh); 8% bản ghi không xác định được tỉnh. 2026* chưa hết năm.</div>
+  </footer>
+</div>
+<div id="tip"></div>
+
+<script>
+const D = /*DATA*/null;
+const GEO = /*GEO*/null;
+
+const R = D.r, N = D.n, DI = D.dict;
+const YEARS = DI.years;
+const fmt = new Intl.NumberFormat("vi-VN");
+const pct = (a, b) => b ? (100 * a / b).toFixed(0) + "%" : "0%";
+const $ = (id) => document.getElementById(id);
+const SRC_LABEL = ["Quan sát", "Tiêu bản", "Khác"];
+const IU_ORDER = [0, 1, 2, 3, 4]; // index trong DI.iucn
+const NGUYCAP = DI.iucn.indexOf("Nguy cấp");
+const CHUADG = DI.iucn.indexOf("Chưa đánh giá");
+
+const state = { page: 1, years: new Set(YEARS), src: new Set([0, 1, 2]), iu: new Set(IU_ORDER), fam: -1, prov: -1 };
+
+/* ---------- lọc ---------- */
+function sel(skip = {}) {
+  const out = [];
+  const { y, src, iu, f, p } = R;
+  for (let i = 0; i < N; i++) {
+    if (!skip.year && !state.years.has(y[i])) continue;
+    if (!state.src.has(src[i])) continue;
+    if (!state.iu.has(iu[i])) continue;
+    if (!skip.fam && state.fam >= 0 && f[i] !== state.fam) continue;
+    if (!skip.prov && state.prov >= 0 && p[i] !== state.prov) continue;
+    out.push(i);
+  }
+  return out;
+}
+function tally(idx, arr, size, filterFn) {
+  const c = new Array(size).fill(0);
+  for (const i of idx) { const k = arr[i]; if (k >= 0 && (!filterFn || filterFn(i))) c[k]++; }
+  return c;
+}
+const topN = (counts, n) => counts.map((v, k) => [k, v]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, n);
+
+/* ---------- tooltip ---------- */
+const tip = $("tip");
+function showTip(e, html) {
+  tip.innerHTML = html; tip.style.display = "block";
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  tip.style.left = Math.min(e.clientX + 12, innerWidth - w - 8) + "px";
+  tip.style.top = Math.min(e.clientY + 14, innerHeight - h - 8) + "px";
+}
+const hideTip = () => { tip.style.display = "none"; };
+function hover(el, html) {
+  el.addEventListener("mousemove", e => showTip(e, html));
+  el.addEventListener("mouseleave", hideTip);
+}
+
+/* ---------- màu ---------- */
+const isDark = () => document.documentElement.dataset.theme === "dark" ||
+  (document.documentElement.dataset.theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+function lerp(a, b, t) { return a.map((v, k) => Math.round(v + (b[k] - v) * t)); }
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+function ramp(t) { // t từ 0 đến 1, một tông xanh dương sáng đến đậm
+  t = Math.max(0, Math.min(1, t));
+  const stops = isDark()
+    ? ["#16304f", "#1c5cab", "#3987e5", "#9ec5f4"]
+    : ["#cde2fb", "#6da7ec", "#256abf", "#0d366b"];
+  const s = stops.map(hex), seg = t * (s.length - 1), k = Math.min(Math.floor(seg), s.length - 2);
+  const c = lerp(s[k], s[k + 1], seg - k);
+  return { css: `rgb(${c})`, lum: (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) };
+}
+
+/* ---------- biểu đồ ---------- */
+function hbar(el, items, o = {}) {
+  el.innerHTML = "";
+  if (!items.length) { el.innerHTML = '<div class="empty">Không có dữ liệu với bộ lọc này.</div>'; return; }
+  const max = Math.max(...items.map(x => x.value));
+  for (const it of items) {
+    const row = document.createElement("div");
+    row.className = "hbar" + (o.onClick ? " click" : "") + (it.dim ? " dim" : "") + (it.sel ? " sel" : "");
+    row.innerHTML = `<div class="lab" title="${it.label}">${it.label}</div>
+      <div class="track"><div class="fill" style="width:${(100 * it.value / max).toFixed(1)}%;background:${it.color || "var(--s1)"}"></div></div>
+      <div class="val">${fmt.format(it.value)}</div>`;
+    hover(row, `<b>${it.label}</b><br>${fmt.format(it.value)} bản ghi` + (it.extra ? "<br>" + it.extra : ""));
+    if (o.onClick) row.addEventListener("click", () => o.onClick(it));
+    el.appendChild(row);
+  }
+}
+
+function vbar(el, cats, o = {}) { // cats: [{label, value, dim, key, color}]
+  const W = 420, H = 190, pl = 6, pr = 6, pt = 18, pb = 22;
+  const max = Math.max(1, ...cats.map(c => c.value));
+  const bw = (W - pl - pr) / cats.length;
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+  s += `<line x1="${pl}" x2="${W - pr}" y1="${H - pb}" y2="${H - pb}" stroke="var(--grid)"/>`;
+  cats.forEach((c, k) => {
+    const h = (H - pt - pb) * c.value / max, x = pl + k * bw + bw * .18, w = bw * .64, y = H - pb - h;
+    s += `<g class="vb" data-k="${k}" style="cursor:${o.onClick ? "pointer" : "default"}" opacity="${c.dim ? .35 : 1}">
+      <rect x="${pl + k * bw}" y="0" width="${bw}" height="${H}" fill="transparent"/>
+      <path d="M${x},${H - pb} V${y + 4} Q${x},${y} ${x + 4},${y} H${x + w - 4} Q${x + w},${y} ${x + w},${y + 4} V${H - pb} Z" fill="${c.color || "var(--s1)"}"/>
+      <text class="val" x="${x + w / 2}" y="${y - 4}" text-anchor="middle">${c.value ? fmt.format(c.value) : ""}</text>
+      <text x="${x + w / 2}" y="${H - 7}" text-anchor="middle">${c.label}</text></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+  el.querySelectorAll(".vb").forEach(g => {
+    const c = cats[+g.dataset.k];
+    hover(g, `<b>${c.label}</b><br>${fmt.format(c.value)} bản ghi`);
+    if (o.onClick) g.addEventListener("click", () => o.onClick(c));
+  });
+}
+
+function stacked(el, cats) { // cats: [{label, parts:[a,b,c], dim}]
+  const W = 420, H = 210, pl = 30, pr = 6, pt = 8, pb = 22;
+  const bw = (W - pl - pr) / cats.length, cols = ["var(--s1)", "var(--s2)", "var(--s3)"];
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+  for (const g of [0, 50, 100]) {
+    const y = pt + (H - pt - pb) * (1 - g / 100);
+    s += `<line x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}" stroke="var(--grid)"/><text x="${pl - 4}" y="${y + 4}" text-anchor="end">${g}%</text>`;
+  }
+  cats.forEach((c, k) => {
+    const tot = c.parts.reduce((a, b) => a + b, 0) || 1;
+    let yb = H - pb;
+    s += `<g class="sk" data-k="${k}" opacity="${c.dim ? .35 : 1}">`;
+    c.parts.forEach((v, j) => {
+      const h = Math.max(0, (H - pt - pb) * v / tot - (v ? 2 : 0));
+      if (v) s += `<rect x="${pl + k * bw + bw * .18}" y="${yb - h}" width="${bw * .64}" height="${h}" rx="2" fill="${cols[j]}"/>`;
+      yb -= (H - pt - pb) * v / tot;
+    });
+    s += `<text x="${pl + k * bw + bw / 2}" y="${H - 7}" text-anchor="middle">${c.label}</text></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+  el.querySelectorAll(".sk").forEach(g => {
+    const c = cats[+g.dataset.k], tot = c.parts.reduce((a, b) => a + b, 0) || 1;
+    hover(g, `<b>${c.label}</b><br>` + c.parts.map((v, j) => `${SRC_LABEL[j]}: ${pct(v, tot)} (${fmt.format(v)})`).join("<br>"));
+  });
+}
+
+/* ---------- bản đồ ---------- */
+function mapChoropleth(el, counts) {
+  const max = Math.max(1, ...counts), logMax = Math.log1p(max);
+  let s = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-label="Bản đồ số bản ghi theo tỉnh">`;
+  for (const f of GEO.f) {
+    const c = f.p >= 0 ? counts[f.p] : 0;
+    const col = c ? ramp(Math.log1p(c) / logMax).css : "var(--map-empty)";
+    s += `<path class="prov${f.p === state.prov ? " sel" : ""}" data-p="${f.p}" d="${f.d}" fill="${col}"/>`;
+  }
+  s += "</svg>";
+  const legend = `<div class="ramp"><div>Số bản ghi (thang log)</div>
+    <div class="bar" style="background:linear-gradient(90deg,${ramp(0).css},${ramp(.5).css},${ramp(1).css})"></div>
+    <div class="ends"><span>1</span><span>${fmt.format(max)}</span></div></div>`;
+  el.innerHTML = s + legend;
+  el.querySelectorAll("path.prov").forEach(pa => {
+    const p = +pa.dataset.p;
+    hover(pa, `<b>${p >= 0 ? DI.prov[p] : "?"}</b><br>${fmt.format(p >= 0 ? counts[p] : 0)} bản ghi`);
+    pa.addEventListener("click", () => setProv(p));
+  });
+}
+function mapPoints(el, idx) {
+  let s = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-label="Vị trí các bản ghi nguy cấp">`;
+  for (const f of GEO.f) s += `<path class="prov${f.p === state.prov ? " sel" : ""}" data-p="${f.p}" d="${f.d}" fill="var(--map-empty)"/>`;
+  const pts = [];
+  for (const i of idx) {
+    if (R.th[i] !== 1) continue;
+    const [x, y] = proj(R.lon[i], R.lat[i]);
+    const hollow = R.imp[i] === 1;
+    s += `<circle class="pt" data-i="${pts.length}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.2" ` +
+      (hollow ? `fill="none" stroke="var(--crit)" stroke-width="1.2"` : `fill="var(--crit)" stroke="var(--map-line)" stroke-width=".8"`) + ` opacity=".85"/>`;
+    pts.push(i);
+  }
+  el.innerHTML = s + "</svg>" + `<div class="ramp"><div><span style="color:var(--crit)">●</span> sai số tọa độ ≤ 5 km</div><div><span style="color:var(--crit)">○</span> sai số &gt; 5 km</div><div>${fmt.format(pts.length)} bản ghi nguy cấp</div></div>`;
+  el.querySelectorAll("circle.pt").forEach(c => {
+    const i = pts[+c.dataset.i];
+    hover(c, `<b>${R.s[i] >= 0 ? DI.sp[R.s[i]] : "(chưa rõ loài)"}</b><br>${R.f[i] >= 0 ? DI.fam[R.f[i]] : ""}<br>${R.p[i] >= 0 ? DI.prov[R.p[i]] : "không rõ tỉnh"}, ${R.y[i]}`);
+  });
+  el.querySelectorAll("path.prov").forEach(pa => {
+    const p = +pa.dataset.p;
+    hover(pa, `<b>${p >= 0 ? DI.prov[p] : "?"}</b>`);
+    pa.addEventListener("click", () => setProv(p));
+  });
+}
+function proj(lon, lat) { return [(lon - GEO.lon0) * GEO.k * GEO.cos, (GEO.lat1 - lat) * GEO.k]; }
+
+/* ---------- điều khiển ---------- */
+function setProv(p) { state.prov = state.prov === p ? -1 : p; render(); }
+function setFam(f) { state.fam = state.fam === f ? -1 : f; $("famsel").value = state.fam; render(); }
+function toggleSet(key, v) {
+  const set = state[key]; // tra theo ten de van dung sau khi "Đặt lại" tao Set moi
+  if (set.has(v)) { if (set.size > 1) set.delete(v); } else set.add(v);
+  render();
+}
+function buildFilters() {
+  const el = $("filters");
+  el.innerHTML = `<div class="fgroup"><span class="flabel">Năm</span><span id="f-year"></span></div>
+    <div class="fgroup"><span class="flabel">Loại bản ghi</span><span id="f-src"></span></div>
+    <div class="fgroup"><span class="flabel">Mức IUCN</span><span id="f-iu"></span></div>
+    <div class="fgroup"><span class="flabel">Họ</span><select id="famsel"></select></div>
+    <span class="active-prov" id="actprov"><span id="actname"></span><button title="Bỏ lọc tỉnh" aria-label="Bỏ lọc tỉnh">×</button></span>
+    <button class="btn" id="reset">Đặt lại bộ lọc</button>`;
+  const mk = (host, items, key, label) => {
+    $(host).innerHTML = "";
+    items.forEach(v => {
+      const b = document.createElement("button");
+      b.className = "chip"; b.dataset.v = v; b.textContent = label(v);
+      b.onclick = () => toggleSet(key, v);
+      $(host).appendChild(b);
+    });
+  };
+  mk("f-year", YEARS, "years", v => v === 2026 ? "2026*" : v);
+  mk("f-src", [0, 1, 2], "src", v => SRC_LABEL[v]);
+  mk("f-iu", IU_ORDER, "iu", v => DI.iucn[v]);
+  const fs = $("famsel");
+  fs.innerHTML = '<option value="-1">Tất cả họ</option>' +
+    DI.famOrder.map(k => `<option value="${k}">${DI.fam[k]}</option>`).join("");
+  fs.onchange = () => { state.fam = +fs.value; render(); };
+  el.querySelector(".active-prov button").onclick = () => { state.prov = -1; render(); };
+  $("reset").onclick = () => {
+    state.years = new Set(YEARS); state.src = new Set([0, 1, 2]); state.iu = new Set(IU_ORDER);
+    state.fam = -1; state.prov = -1; fs.value = -1; render();
+  };
+}
+function syncFilters() {
+  document.querySelectorAll("#f-year .chip").forEach(b => b.setAttribute("aria-pressed", state.years.has(+b.dataset.v)));
+  document.querySelectorAll("#f-src .chip").forEach(b => b.setAttribute("aria-pressed", state.src.has(+b.dataset.v)));
+  document.querySelectorAll("#f-iu .chip").forEach(b => b.setAttribute("aria-pressed", state.iu.has(+b.dataset.v)));
+  const ap = $("actprov");
+  ap.style.display = state.prov >= 0 ? "inline-flex" : "none";
+  if (state.prov >= 0) $("actname").textContent = "Tỉnh: " + DI.prov[state.prov];
+}
+
+/* ---------- các trang ---------- */
+function page1() {
+  const all = sel(), np = sel({ prov: true }), nf = sel({ fam: true });
+  const sp = new Set(), fa = new Set(), pr = new Set();
+  let assessed = 0;
+  for (const i of all) {
+    if (R.s[i] >= 0) sp.add(R.s[i]);
+    if (R.f[i] >= 0) fa.add(R.f[i]);
+    if (R.p[i] >= 0) pr.add(R.p[i]);
+    if (R.iu[i] !== CHUADG) assessed++;
+  }
+  $("kpis").innerHTML = [
+    [fmt.format(all.length), "Bản ghi"], [fmt.format(sp.size), "Loài"], [fmt.format(fa.size), "Họ"],
+    [fmt.format(pr.size), "Tỉnh có dữ liệu"], [pct(assessed, all.length), "Có mức IUCN"],
+  ].map(([v, l]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+
+  const pc = tally(np, R.p, DI.prov.length);
+  const top5 = topN(pc, 5), withProv = pc.reduce((a, b) => a + b, 0);
+  $("h1t").textContent = top5.length >= 5
+    ? `Năm tỉnh đầu bảng (${top5.map(x => DI.prov[x[0]]).join(", ")}) chiếm ${pct(top5.reduce((a, x) => a + x[1], 0), withProv)} bản ghi có tỉnh.`
+    : "Không đủ dữ liệu cho bộ lọc này.";
+
+  mapChoropleth($("map1"), pc);
+
+  const fc = topN(tally(nf, R.f, DI.fam.length), 10);
+  hbar($("fam"), fc.map(([k, v]) => ({ label: DI.fam[k], value: v, sel: k === state.fam, dim: state.fam >= 0 && k !== state.fam, key: k })),
+    { onClick: it => setFam(it.key) });
+  const sc = topN(tally(all, R.s, DI.sp.length), 10);
+  hbar($("sp"), sc.map(([k, v]) => ({ label: DI.sp[k], value: v, color: "var(--s1)" })));
+  hbar($("prov"), topN(pc, 12).map(([k, v]) => ({ label: DI.prov[k], value: v, key: k, sel: k === state.prov, dim: state.prov >= 0 && k !== state.prov })),
+    { onClick: it => setProv(it.key) });
+}
+
+function page2() {
+  const ny = sel({ year: true }), np = sel({ year: true, prov: true });
+  const yc = tally(ny, R.y, 2027).slice(2020);
+  const ycats = YEARS.map((y, k) => ({ label: y === 2026 ? "2026*" : String(y), value: yc[k], dim: !state.years.has(y), key: y }));
+  vbar($("yr"), ycats, { onClick: c => { const s = state.years; if (s.has(c.key) && s.size > 1) s.delete(c.key); else s.add(c.key); render(); } });
+
+  const all = sel(), mc = new Array(13).fill(0);
+  for (const i of all) if (R.m[i] > 0) mc[R.m[i]]++;
+  vbar($("mo"), Array.from({ length: 12 }, (_, k) => ({ label: "T" + (k + 1), value: mc[k + 1] })));
+
+  const parts = YEARS.map(() => [0, 0, 0]);
+  for (const i of ny) parts[R.y[i] - 2020][R.src[i]]++;
+  stacked($("src"), YEARS.map((y, k) => ({ label: y === 2026 ? "26*" : String(y).slice(2), parts: parts[k], dim: !state.years.has(y) })));
+
+  const dc = tally(all, R.ds, DI.ds.length);
+  hbar($("ds"), topN(dc, 5).map(([k, v]) => ({ label: DI.ds[k], value: v, color: "var(--s2)" })));
+
+  // heatmap: top 10 tỉnh x năm
+  const pc = tally(np, R.p, DI.prov.length), top = topN(pc, 10).map(x => x[0]);
+  const m = top.map(() => new Array(7).fill(0)); const pos = new Map(top.map((k, j) => [k, j]));
+  let mx = 1;
+  for (const i of np) { const j = pos.get(R.p[i]); if (j !== undefined) { m[j][R.y[i] - 2020]++; mx = Math.max(mx, m[j][R.y[i] - 2020]); } }
+  let h = '<table class="heat"><tr><th></th>' + YEARS.map(y => `<th class="c${state.years.has(y) ? "" : " coldim"}">${y === 2026 ? "2026*" : y}</th>`).join("") + "</tr>";
+  top.forEach((k, j) => {
+    h += `<tr class="${k === state.prov ? "sel" : state.prov >= 0 ? "dim" : ""}"><th>${DI.prov[k]}</th>` +
+      m[j].map((v, c) => {
+        const col = ramp(v / mx);
+        return `<td class="${state.years.has(YEARS[c]) ? "" : "coldim"}" style="background:${col.css};color:${col.lum > 140 ? "#0b0b0b" : "#fff"}" data-t="${DI.prov[k]}, ${YEARS[c]}: ${fmt.format(v)} bản ghi">${v}</td>`;
+      }).join("") + "</tr>";
+  });
+  $("heat").innerHTML = h + "</table>";
+  $("heat").querySelectorAll("td").forEach(td => hover(td, td.dataset.t));
+  $("heat").querySelectorAll("tr").forEach((tr, j) => { if (j > 0) tr.style.cursor = "pointer", tr.onclick = () => setProv(top[j - 1]); });
+
+  // tiêu đề thông điệp
+  const sy = YEARS.filter(y => state.years.has(y)), cnt = y => yc[y - 2020];
+  let t = "Chọn từ hai năm trở lên để xem xu hướng.";
+  const full = sy.filter(y => y <= 2025);
+  if (sy.length >= 2 && cnt(sy[0]) > 0 && full.length >= 2) {
+    const first = full[0], peak = full.reduce((a, y) => cnt(y) > cnt(a) ? y : a, first);
+    const last = full[full.length - 1], lt = parts[last - 2020], lts = lt.reduce((a, b) => a + b, 0);
+    t = `Ghi nhận tăng gấp ${(cnt(peak) / cnt(first)).toFixed(1).replace(".", ",")} lần (${first} đến ${peak}), nhưng tiêu bản chỉ còn ${pct(lt[1], lts)} bản ghi năm ${last}.`;
+  }
+  $("h2t").textContent = t;
+}
+
+function page3() {
+  const all = sel();
+  let th = 0, un = 0;
+  for (const i of all) { if (R.iu[i] === NGUYCAP) th++; if (R.iu[i] === CHUADG) un++; }
+  $("h3t").textContent = all.length
+    ? `Chỉ ${pct(th, all.length)} bản ghi là loài nguy cấp, và ${pct(un, all.length)} chưa được đánh giá IUCN.`
+    : "Không có dữ liệu với bộ lọc này.";
+
+  const ni = sel(), ic = tally(ni, R.iu, DI.iucn.length);
+  const colors = DI.iucn.map(n => n === "Nguy cấp" ? "var(--crit)" : "var(--s3)");
+  hbar($("iu"), IU_ORDER.map(k => ({ label: DI.iucn[k], value: ic[k], color: colors[k] })).filter(x => x.value > 0));
+
+  const np = sel({ prov: true }).filter(i => R.iu[i] === NGUYCAP);
+  hbar($("tprov"), topN(tally(np, R.p, DI.prov.length), 8).map(([k, v]) => ({ label: DI.prov[k], value: v, key: k, color: "var(--crit)", sel: k === state.prov, dim: state.prov >= 0 && k !== state.prov })),
+    { onClick: it => setProv(it.key) });
+  const nf = all.filter(i => R.iu[i] === NGUYCAP);
+  hbar($("tfam"), topN(tally(nf, R.f, DI.fam.length), 8).map(([k, v]) => ({ label: DI.fam[k], value: v, color: "var(--crit)" })));
+  mapPoints($("map3"), sel({ prov: true }));
+}
+
+function render() {
+  hideTip(); syncFilters();
+  [page1, page2, page3][state.page - 1]();
+  $("subcount").textContent = fmt.format(N) + " bản ghi sau làm sạch";
+}
+
+/* ---------- khởi động ---------- */
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+  state.page = +t.dataset.page;
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
+  document.querySelectorAll(".page").forEach(p => p.hidden = p.id !== "p" + state.page);
+  render();
+});
+$("theme").onclick = () => {
+  document.documentElement.dataset.theme = isDark() ? "light" : "dark";
+  render();
+};
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+buildFilters();
+render();
+</script>
+</body>
+</html>
