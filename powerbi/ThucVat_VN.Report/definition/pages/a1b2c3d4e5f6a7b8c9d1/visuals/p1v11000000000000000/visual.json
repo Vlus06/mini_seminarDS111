@@ -1,0 +1,197 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "p1v11000000000000000",
+  "position": {
+    "x": 20,
+    "y": 265,
+    "z": 1100,
+    "width": 610,
+    "height": 560,
+    "tabOrder": 1100
+  },
+  "visual": {
+    "visualType": "scriptVisual",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "province"
+                }
+              },
+              "queryRef": "ban_ghi.province",
+              "nativeQueryRef": "province"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "So_ban_ghi"
+                }
+              },
+              "queryRef": "ban_ghi.So_ban_ghi",
+              "nativeQueryRef": "So_ban_ghi"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'import json\nimport unicodedata\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Polygon\n\ndef norm(s):\n    s = unicodedata.normalize(\"NFC\", str(s)).lower()\n    return \"\".join(ch for ch in s if ch.isalnum())\n\nprovinces = json.load(open(r\"C:\\DS111\\miniseminar\\assets\\vn_provinces.json\", encoding=\"utf-8\"))\nfig, ax = plt.subplots()\nfig.patch.set_alpha(0)\n\ndef draw_outline(fill=None):\n    for f in provinces:\n        face = fill(f[\"name\"]) if fill else \"#efeeea\"\n        for ring in f[\"rings\"]:\n            ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor=\"white\", linewidth=0.4))\n\nax.set_xlim(102, 109.6)\nax.set_ylim(8.2, 23.6)\nax.set_aspect(1 / np.cos(np.radians(16)))\nax.axis(\"off\")\n\nfrom matplotlib.colors import LinearSegmentedColormap\n\ncmap = LinearSegmentedColormap.from_list(\"blues\", [\"#cde2fb\", \"#6da7ec\", \"#256abf\", \"#0d366b\"])\ncounts = {norm(p): v for p, v in zip(dataset[\"province\"], dataset[\"So_ban_ghi\"]) if isinstance(p, str)}\ntop = max(counts.values()) if counts else 1\n\ndef fill(name):\n    v = counts.get(norm(name), 0)\n    return cmap(np.log1p(v) / np.log1p(top)) if v else \"#efeeea\"\n\ndraw_outline(fill)\nsm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, np.log1p(top)))\ncb = plt.colorbar(sm, ax=ax, orientation=\"horizontal\", shrink=0.6, pad=0.02, aspect=30)\nticks = [t for t in (1, 10, 100, 1000) if t <= top * 0.6] + [top]\ncb.set_ticks([np.log1p(t) for t in ticks])\ncb.set_ticklabels([f\"{t:,}\" for t in ticks])\ncb.set_label(\"Số bản ghi (thang log)\")\nplt.tight_layout()\nplt.show()\n'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Số bản ghi theo tỉnh (bấm một thanh ở biểu đồ top 12 tỉnh để lọc cả trang)'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#ffffff'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#e4e3df'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

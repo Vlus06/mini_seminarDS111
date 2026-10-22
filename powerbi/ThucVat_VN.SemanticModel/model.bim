@@ -1,0 +1,403 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "ban_ghi",
+        "columns": [
+          {
+            "name": "gbifID",
+            "dataType": "int64",
+            "sourceColumn": "gbifID",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "scientificName",
+            "dataType": "string",
+            "sourceColumn": "scientificName"
+          },
+          {
+            "name": "species",
+            "dataType": "string",
+            "sourceColumn": "species"
+          },
+          {
+            "name": "genus",
+            "dataType": "string",
+            "sourceColumn": "genus"
+          },
+          {
+            "name": "family",
+            "dataType": "string",
+            "sourceColumn": "family"
+          },
+          {
+            "name": "order",
+            "dataType": "string",
+            "sourceColumn": "order"
+          },
+          {
+            "name": "class",
+            "dataType": "string",
+            "sourceColumn": "class"
+          },
+          {
+            "name": "phylum",
+            "dataType": "string",
+            "sourceColumn": "phylum"
+          },
+          {
+            "name": "taxonRank",
+            "dataType": "string",
+            "sourceColumn": "taxonRank"
+          },
+          {
+            "name": "iucnRedListCategory",
+            "dataType": "string",
+            "sourceColumn": "iucnRedListCategory"
+          },
+          {
+            "name": "basisOfRecord",
+            "dataType": "string",
+            "sourceColumn": "basisOfRecord"
+          },
+          {
+            "name": "datasetName",
+            "dataType": "string",
+            "sourceColumn": "datasetName"
+          },
+          {
+            "name": "institutionCode",
+            "dataType": "string",
+            "sourceColumn": "institutionCode"
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "month",
+            "dataType": "int64",
+            "sourceColumn": "month",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "day",
+            "dataType": "int64",
+            "sourceColumn": "day",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "decimalLatitude",
+            "dataType": "double",
+            "sourceColumn": "decimalLatitude",
+            "summarizeBy": "none",
+            "dataCategory": "latitude"
+          },
+          {
+            "name": "decimalLongitude",
+            "dataType": "double",
+            "sourceColumn": "decimalLongitude",
+            "summarizeBy": "none",
+            "dataCategory": "longitude"
+          },
+          {
+            "name": "coordinateUncertaintyInMeters",
+            "dataType": "double",
+            "sourceColumn": "coordinateUncertaintyInMeters",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "license",
+            "dataType": "string",
+            "sourceColumn": "license"
+          },
+          {
+            "name": "is_assessed",
+            "dataType": "boolean",
+            "sourceColumn": "is_assessed",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+          },
+          {
+            "name": "is_threatened",
+            "dataType": "boolean",
+            "sourceColumn": "is_threatened",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+          },
+          {
+            "name": "source_type",
+            "dataType": "string",
+            "sourceColumn": "source_type"
+          },
+          {
+            "name": "year_month",
+            "dataType": "string",
+            "sourceColumn": "year_month"
+          },
+          {
+            "name": "province",
+            "dataType": "string",
+            "sourceColumn": "province",
+            "dataCategory": "stateOrProvince"
+          },
+          {
+            "name": "species_level",
+            "dataType": "boolean",
+            "sourceColumn": "species_level",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+          },
+          {
+            "name": "iucn_group",
+            "dataType": "string",
+            "sourceColumn": "iucn_group",
+            "sortByColumn": "iucn_thu_tu"
+          },
+          {
+            "name": "coord_imprecise",
+            "dataType": "boolean",
+            "sourceColumn": "coord_imprecise",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+          },
+          {
+            "name": "nam_nhan",
+            "dataType": "string",
+            "sourceColumn": "nam_nhan"
+          },
+          {
+            "name": "thang_nhan",
+            "dataType": "string",
+            "sourceColumn": "thang_nhan",
+            "sortByColumn": "month"
+          },
+          {
+            "name": "loai_ban_ghi",
+            "dataType": "string",
+            "sourceColumn": "loai_ban_ghi",
+            "sortByColumn": "loai_ban_ghi_thu_tu"
+          },
+          {
+            "name": "loai_ban_ghi_thu_tu",
+            "dataType": "int64",
+            "sourceColumn": "loai_ban_ghi_thu_tu",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "iucn_thu_tu",
+            "dataType": "int64",
+            "sourceColumn": "iucn_thu_tu",
+            "formatString": "0",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "dia_diem",
+            "dataType": "string",
+            "sourceColumn": "dia_diem",
+            "dataCategory": "place"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "ban_ghi",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    DuongDan = \"C:\\DS111\\miniseminar\\vn_plants_clean.csv\",",
+                "    Nguon = Csv.Document(File.Contents(DuongDan), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    TieuDe = Table.PromoteHeaders(Nguon, [PromoteAllScalars = true]),",
+                "",
+                "    // Ô trống trong CSV thành null để Power BI coi là Blank (nếu không, DISTINCTCOUNT đếm thêm một giá trị rỗng)",
+                "    LamSach = Table.ReplaceValue(TieuDe, \"\", null, Replacer.ReplaceValue, Table.ColumnNames(TieuDe)),",
+                "",
+                "    // Ép kiểu; culture en-US để dấu chấm thập phân được đọc đúng",
+                "    Kieu = Table.TransformColumnTypes(LamSach, {",
+                "        {\"gbifID\", Int64.Type}, {\"year\", Int64.Type}, {\"month\", Int64.Type}, {\"day\", Int64.Type},",
+                "        {\"decimalLatitude\", type number}, {\"decimalLongitude\", type number},",
+                "        {\"coordinateUncertaintyInMeters\", type number},",
+                "        {\"is_assessed\", type logical}, {\"is_threatened\", type logical},",
+                "        {\"species_level\", type logical}, {\"coord_imprecise\", type logical}",
+                "    }, \"en-US\"),",
+                "",
+                "    // Nhãn tiếng Việt và cột thứ tự để sắp xếp trên biểu đồ",
+                "    NamNhan = Table.AddColumn(Kieu, \"nam_nhan\", each if [year] = 2026 then \"2026*\" else Text.From([year]), type text),",
+                "    ThangNhan = Table.AddColumn(NamNhan, \"thang_nhan\", each if [month] = null then null else \"T\" & Text.From([month]), type text),",
+                "    LoaiBanGhi = Table.AddColumn(ThangNhan, \"loai_ban_ghi\", each",
+                "        if [source_type] = \"Quan sat\" then \"Quan sát\"",
+                "        else if [source_type] = \"Tieu ban\" then \"Tiêu bản\"",
+                "        else \"Khác\", type text),",
+                "    LoaiThuTu = Table.AddColumn(LoaiBanGhi, \"loai_ban_ghi_thu_tu\", each",
+                "        if [loai_ban_ghi] = \"Quan sát\" then 1 else if [loai_ban_ghi] = \"Tiêu bản\" then 2 else 3, Int64.Type),",
+                "    IucnThuTu = Table.AddColumn(LoaiThuTu, \"iucn_thu_tu\", each",
+                "        List.PositionOf({\"Chưa đánh giá\", \"Ít quan ngại\", \"Nguy cấp\", \"Thiếu dữ liệu\", \"Khác\"}, [iucn_group]) + 1, Int64.Type),",
+                "",
+                "    // Tên địa điểm kèm quốc gia, để bản đồ Bing xác định đúng tỉnh của Việt Nam",
+                "    DiaDiem = Table.AddColumn(IucnThuTu, \"dia_diem\", each",
+                "        if [province] = null then null else [province] & \", Việt Nam\", type text)",
+                "in",
+                "    DiaDiem"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "So_ban_ghi",
+            "expression": [
+              "COUNTROWS(ban_ghi)"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "So_ban_ghi_co_tinh",
+            "expression": [
+              "IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_ban_ghi])"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "So_ban_ghi_co_loai",
+            "expression": [
+              "IF(HASONEVALUE(ban_ghi[species]) && ISBLANK(SELECTEDVALUE(ban_ghi[species])), BLANK(), [So_ban_ghi])"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "So_loai",
+            "expression": [
+              "CALCULATE(DISTINCTCOUNT(ban_ghi[species]), ban_ghi[species_level] = TRUE())"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "So_ho",
+            "expression": [
+              "DISTINCTCOUNTNOBLANK(ban_ghi[family])"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "So_tinh",
+            "expression": [
+              "DISTINCTCOUNTNOBLANK(ban_ghi[province])"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Ty_le_IUCN",
+            "expression": [
+              "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] <> \"Chưa đánh giá\"), [So_ban_ghi])"
+            ],
+            "formatString": "0%"
+          },
+          {
+            "name": "Ty_le_chua_danh_gia",
+            "expression": [
+              "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = \"Chưa đánh giá\"), [So_ban_ghi])"
+            ],
+            "formatString": "0%"
+          },
+          {
+            "name": "So_nguy_cap",
+            "expression": [
+              "CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = \"Nguy cấp\")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Ty_le_nguy_cap",
+            "expression": [
+              "DIVIDE([So_nguy_cap], [So_ban_ghi])"
+            ],
+            "formatString": "0%"
+          },
+          {
+            "name": "So_nguy_cap_co_tinh",
+            "expression": [
+              "IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_nguy_cap])"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Ty_le_tieu_ban",
+            "expression": [
+              "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[loai_ban_ghi] = \"Tiêu bản\"), [So_ban_ghi])"
+            ],
+            "formatString": "0%"
+          },
+          {
+            "name": "Top5_tinh_ty_le",
+            "expression": [
+              "VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))",
+              "        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)",
+              "        RETURN DIVIDE(",
+              "            SUMX(Top5, [So_ban_ghi]),",
+              "            CALCULATE([So_ban_ghi], ban_ghi[province] <> BLANK())",
+              "        )"
+            ],
+            "formatString": "0%"
+          },
+          {
+            "name": "Top5_tinh_ten",
+            "expression": [
+              "VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))",
+              "        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)",
+              "        RETURN CONCATENATEX(Top5, ban_ghi[province], \", \", [So_ban_ghi], DESC)"
+            ]
+          },
+          {
+            "name": "Tieu_de_trang1",
+            "expression": [
+              "\"Năm tỉnh đầu bảng (\" & [Top5_tinh_ten] & \") chiếm \" &",
+              "        FORMAT([Top5_tinh_ty_le], \"0%\") & \" bản ghi có tỉnh.\""
+            ]
+          },
+          {
+            "name": "Tieu_de_trang2",
+            "expression": [
+              "VAR Nam = FILTER(ALLSELECTED(ban_ghi[year]), ban_ghi[year] <= 2025)",
+              "        VAR NamDau = MINX(Nam, ban_ghi[year])",
+              "        VAR NamCuoi = MAXX(Nam, ban_ghi[year])",
+              "        VAR NamDinh = MAXX(TOPN(1, Nam, [So_ban_ghi], DESC), ban_ghi[year])",
+              "        VAR Gap = DIVIDE(",
+              "            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDinh),",
+              "            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDau)",
+              "        )",
+              "        RETURN IF(",
+              "            NamDau = NamCuoi,",
+              "            \"Chọn từ hai năm trở lên để xem xu hướng.\",",
+              "            \"Ghi nhận tăng gấp \" & FORMAT(Gap, \"0.0\", \"vi-VN\") & \" lần (\" & NamDau & \" đến \" & NamDinh &",
+              "            \"), nhưng tiêu bản chỉ còn \" &",
+              "            FORMAT(CALCULATE([Ty_le_tieu_ban], ban_ghi[year] = NamCuoi), \"0%\") &",
+              "            \" bản ghi năm \" & NamCuoi & \".\"",
+              "        )"
+            ]
+          },
+          {
+            "name": "Tieu_de_trang3",
+            "expression": [
+              "\"Chỉ \" & FORMAT([Ty_le_nguy_cap], \"0%\") & \" bản ghi là loài nguy cấp, và \" &",
+              "        FORMAT([Ty_le_chua_danh_gia], \"0%\") & \" chưa được đánh giá IUCN.\""
+            ]
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"ban_ghi\"]"
+      }
+    ]
+  }
+}

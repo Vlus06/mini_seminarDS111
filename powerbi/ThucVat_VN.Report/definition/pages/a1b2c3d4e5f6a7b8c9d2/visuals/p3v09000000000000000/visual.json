@@ -1,0 +1,282 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "p3v09000000000000000",
+  "position": {
+    "x": 650,
+    "y": 485,
+    "z": 900,
+    "width": 610,
+    "height": 320,
+    "tabOrder": 900
+  },
+  "visual": {
+    "visualType": "scriptVisual",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "decimalLongitude"
+                }
+              },
+              "queryRef": "ban_ghi.decimalLongitude",
+              "nativeQueryRef": "decimalLongitude"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "decimalLatitude"
+                }
+              },
+              "queryRef": "ban_ghi.decimalLatitude",
+              "nativeQueryRef": "decimalLatitude"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "coord_imprecise"
+                }
+              },
+              "queryRef": "ban_ghi.coord_imprecise",
+              "nativeQueryRef": "coord_imprecise"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "gbifID"
+                }
+              },
+              "queryRef": "ban_ghi.gbifID",
+              "nativeQueryRef": "gbifID"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'import json\nimport unicodedata\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Polygon\n\ndef norm(s):\n    s = unicodedata.normalize(\"NFC\", str(s)).lower()\n    return \"\".join(ch for ch in s if ch.isalnum())\n\nprovinces = json.load(open(r\"C:\\DS111\\miniseminar\\assets\\vn_provinces.json\", encoding=\"utf-8\"))\nfig, ax = plt.subplots()\nfig.patch.set_alpha(0)\n\ndef draw_outline(fill=None):\n    for f in provinces:\n        face = fill(f[\"name\"]) if fill else \"#efeeea\"\n        for ring in f[\"rings\"]:\n            ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor=\"white\", linewidth=0.4))\n\nax.set_xlim(102, 109.6)\nax.set_ylim(8.2, 23.6)\nax.set_aspect(1 / np.cos(np.radians(16)))\nax.axis(\"off\")\n\ndraw_outline()\nd = dataset.dropna(subset=[\"decimalLongitude\", \"decimalLatitude\"])\nblur = d[\"coord_imprecise\"].astype(str).str.lower() == \"true\"\nax.scatter(d.loc[~blur, \"decimalLongitude\"], d.loc[~blur, \"decimalLatitude\"], s=16, color=\"#d03b3b\",\n           edgecolors=\"white\", linewidths=0.5, alpha=0.85, label=\"Sai số ≤ 5 km\")\nax.scatter(d.loc[blur, \"decimalLongitude\"], d.loc[blur, \"decimalLatitude\"], s=30, facecolors=\"none\",\n           edgecolors=\"#d03b3b\", linewidths=1.0, label=\"Sai số > 5 km\")\nax.legend(loc=\"upper center\", bbox_to_anchor=(0.5, 0.0), ncol=2, frameon=False, fontsize=8, title=f\"{len(d):,} bản ghi nguy cấp\")\nplt.tight_layout()\nplt.show()\n'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Vị trí các bản ghi nguy cấp (chấm rỗng: sai số tọa độ trên 5 km, chỉ cho biết khu vực chung)'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#ffffff'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#e4e3df'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f_p3_is_threatened00",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ban_ghi"
+              }
+            },
+            "Property": "is_threatened"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "b",
+              "Entity": "ban_ghi",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "b"
+                          }
+                        },
+                        "Property": "is_threatened"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "true"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

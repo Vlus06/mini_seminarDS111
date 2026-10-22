@@ -1,0 +1,84 @@
+// Các measure cho bảng ban_ghi.
+// Cách 1 (nhanh): mở "DAX query view" (biểu tượng DAX ở thanh trái), dán toàn bộ file này,
+//   bấm "Update model: Add all measures" (hoặc từng nút "Update model" trên mỗi measure).
+// Cách 2: chuột phải bảng ban_ghi > New measure, dán từng dòng "Tên = biểu thức".
+
+DEFINE
+    MEASURE ban_ghi[So_ban_ghi] = COUNTROWS(ban_ghi)
+
+    // Dùng làm tiêu chí "By value" của bộ lọc Top N theo tỉnh: bản ghi không rõ tỉnh trả về Blank nên không lọt top
+    MEASURE ban_ghi[So_ban_ghi_co_tinh] =
+        IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_ban_ghi])
+
+    // Tương tự cho loài: bản ghi chưa định danh đến loài (species trống) không lọt top
+    MEASURE ban_ghi[So_ban_ghi_co_loai] =
+        IF(HASONEVALUE(ban_ghi[species]) && ISBLANK(SELECTEDVALUE(ban_ghi[species])), BLANK(), [So_ban_ghi])
+
+    MEASURE ban_ghi[So_loai] =
+        CALCULATE(DISTINCTCOUNT(ban_ghi[species]), ban_ghi[species_level] = TRUE())
+
+    MEASURE ban_ghi[So_ho] = DISTINCTCOUNTNOBLANK(ban_ghi[family])
+
+    MEASURE ban_ghi[So_tinh] = DISTINCTCOUNTNOBLANK(ban_ghi[province])
+
+    MEASURE ban_ghi[Ty_le_IUCN] =
+        DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] <> "Chưa đánh giá"), [So_ban_ghi])
+
+    MEASURE ban_ghi[Ty_le_chua_danh_gia] =
+        DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = "Chưa đánh giá"), [So_ban_ghi])
+
+    MEASURE ban_ghi[So_nguy_cap] =
+        CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = "Nguy cấp")
+
+    MEASURE ban_ghi[Ty_le_nguy_cap] = DIVIDE([So_nguy_cap], [So_ban_ghi])
+
+    // Số bản ghi nguy cấp, dùng cho Top N theo tỉnh (bản ghi không rõ tỉnh trả về Blank)
+    MEASURE ban_ghi[So_nguy_cap_co_tinh] =
+        IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_nguy_cap])
+
+    MEASURE ban_ghi[Ty_le_tieu_ban] =
+        DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[loai_ban_ghi] = "Tiêu bản"), [So_ban_ghi])
+
+    // Tỷ lệ bản ghi của 5 tỉnh đầu bảng, tính trên các bản ghi có tỉnh
+    MEASURE ban_ghi[Top5_tinh_ty_le] =
+        VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))
+        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)
+        RETURN DIVIDE(
+            SUMX(Top5, [So_ban_ghi]),
+            CALCULATE([So_ban_ghi], ban_ghi[province] <> BLANK())
+        )
+
+    // Tên 5 tỉnh đầu bảng, ghép thành một chuỗi
+    MEASURE ban_ghi[Top5_tinh_ten] =
+        VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))
+        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)
+        RETURN CONCATENATEX(Top5, ban_ghi[province], ", ", [So_ban_ghi], DESC)
+
+    // Dòng tiêu đề thông điệp cho từng trang (dùng visual Card)
+    MEASURE ban_ghi[Tieu_de_trang1] =
+        "Năm tỉnh đầu bảng (" & [Top5_tinh_ten] & ") chiếm " &
+        FORMAT([Top5_tinh_ty_le], "0%") & " bản ghi có tỉnh."
+
+    MEASURE ban_ghi[Tieu_de_trang2] =
+        VAR Nam = FILTER(ALLSELECTED(ban_ghi[year]), ban_ghi[year] <= 2025)
+        VAR NamDau = MINX(Nam, ban_ghi[year])
+        VAR NamCuoi = MAXX(Nam, ban_ghi[year])
+        VAR NamDinh = MAXX(TOPN(1, Nam, [So_ban_ghi], DESC), ban_ghi[year])
+        VAR Gap = DIVIDE(
+            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDinh),
+            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDau)
+        )
+        RETURN IF(
+            NamDau = NamCuoi,
+            "Chọn từ hai năm trở lên để xem xu hướng.",
+            "Ghi nhận tăng gấp " & FORMAT(Gap, "0.0", "vi-VN") & " lần (" & NamDau & " đến " & NamDinh &
+            "), nhưng tiêu bản chỉ còn " &
+            FORMAT(CALCULATE([Ty_le_tieu_ban], ban_ghi[year] = NamCuoi), "0%") &
+            " bản ghi năm " & NamCuoi & "."
+        )
+
+    MEASURE ban_ghi[Tieu_de_trang3] =
+        "Chỉ " & FORMAT([Ty_le_nguy_cap], "0%") & " bản ghi là loài nguy cấp, và " &
+        FORMAT([Ty_le_chua_danh_gia], "0%") & " chưa được đánh giá IUCN."
+
+EVALUATE ROW("Ban_ghi", [So_ban_ghi], "Tieu_de_1", [Tieu_de_trang1], "Tieu_de_2", [Tieu_de_trang2], "Tieu_de_3", [Tieu_de_trang3])

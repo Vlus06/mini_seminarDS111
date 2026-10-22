@@ -1,0 +1,13 @@
+{
+  "name": "Thuc vat Viet Nam",
+  "dataColors": ["#2a78d6", "#eb6834", "#b8b7b0", "#d03b3b", "#1baf7a", "#e87ba4", "#6250d6", "#eda100"],
+  "background": "#ffffff",
+  "foreground": "#0b0b0b",
+  "tableAccent": "#2a78d6",
+  "good": "#0ca30c",
+  "neutral": "#fab219",
+  "bad": "#d03b3b",
+  "minimum": "#cde2fb",
+  "center": "#6da7ec",
+  "maximum": "#0d366b"
+}

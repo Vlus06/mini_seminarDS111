@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.0.0/schema.json",
+  "themeCollection": {
+    "customTheme": {
+      "name": "theme_thucvat.json",
+      "reportVersionAtImport": {
+        "visual": "2.3.0",
+        "report": "3.0.0",
+        "page": "2.0.0"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "resourcePackages": [
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "theme_thucvat.json",
+          "path": "theme_thucvat.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ]
+}
