@@ -1,38 +1,18 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2v10000000000000000",
   "position": {
     "x": 20,
     "y": 805,
     "z": 1000,
-    "width": 1240,
     "height": 440,
+    "width": 1240,
     "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "ban_ghi"
-                    }
-                  },
-                  "Property": "province"
-                }
-              },
-              "queryRef": "ban_ghi.province",
-              "nativeQueryRef": "province",
-              "active": true,
-              "displayName": "Tỉnh"
-            }
-          ]
-        },
         "Columns": {
           "projections": [
             {
@@ -50,6 +30,26 @@
               "nativeQueryRef": "nam_nhan",
               "active": true,
               "displayName": "Năm"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ban_ghi"
+                    }
+                  },
+                  "Property": "province"
+                }
+              },
+              "queryRef": "ban_ghi.province",
+              "nativeQueryRef": "province",
+              "active": true,
+              "displayName": "Tỉnh"
             }
           ]
         },
@@ -87,11 +87,9 @@
             },
             "direction": "Descending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
-    "drillFilterOtherVisuals": true,
     "objects": {
       "subTotals": [
         {
@@ -155,7 +153,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#52514e'"
+                      "Value": "'#4a5a55'"
                     }
                   }
                 }
@@ -171,7 +169,7 @@
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -193,7 +191,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0b0b0b'"
+                      "Value": "'#12201c'"
                     }
                   }
                 }
@@ -241,13 +239,6 @@
                   "Value": "14D"
                 }
               }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Center'"
-                }
-              }
             }
           }
         },
@@ -273,14 +264,14 @@
                           "min": {
                             "color": {
                               "Literal": {
-                                "Value": "'#cde2fb'"
+                                "Value": "'#e3f2ee'"
                               }
                             }
                           },
                           "max": {
                             "color": {
                               "Literal": {
-                                "Value": "'#0d366b'"
+                                "Value": "'#0a3d34'"
                               }
                             }
                           },
@@ -340,7 +331,14 @@
             "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
                 }
               }
             },
@@ -356,7 +354,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0b0b0b'"
+                      "Value": "'#12201c'"
                     }
                   }
                 }
@@ -411,7 +409,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#e4e3df'"
+                      "Value": "'#dfe5e2'"
                     }
                   }
                 }
@@ -434,7 +432,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [

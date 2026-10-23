@@ -20,7 +20,10 @@ REPORT_DIR = PB / f"{NAME}.Report"
 ENT = "ban_ghi"
 SCHEMA = "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/"
 V_REPORT, V_PAGE, V_VISUAL, V_PAGES = "3.0.0", "2.0.0", "2.3.0", "1.0.0"
-RED, RED_LIGHT, GRAY, ORANGE = "#d03b3b", "#f2a0a0", "#b8b7b0", "#eb6834"
+# Bang mau "Rung": xanh ngoc (chinh), ho phach, do gach; da qua validate_palette.js (3 mau series)
+PRIMARY, ACCENT, RED, GRAY = "#0f8a73", "#e9a23b", "#c8412b", "#9aa5b1"
+RAMP_LOW, RAMP_HIGH, BANNER = "#e3f2ee", "#0a3d34", "#0f3d36"
+ORANGE = ACCENT
 
 
 def write_json(path, obj):
@@ -38,7 +41,7 @@ CATEGORY = {"decimalLatitude": "latitude", "decimalLongitude": "longitude", "pro
             "dia_diem": "place"}
 FORMAT = {"Ty_le_IUCN": "0%", "Ty_le_chua_danh_gia": "0%", "Ty_le_nguy_cap": "0%", "Ty_le_tieu_ban": "0%",
           "Top5_tinh_ty_le": "0%", "So_ban_ghi": "#,0", "So_ban_ghi_co_tinh": "#,0", "So_ban_ghi_co_loai": "#,0",
-          "So_loai": "#,0", "So_ho": "#,0", "So_tinh": "#,0", "So_nguy_cap": "#,0", "So_nguy_cap_co_tinh": "#,0"}
+          "So_loai": "#,0", "So_ho": "#,0",  "So_tinh": "#,0", "So_nguy_cap": "#,0", "So_nguy_cap_co_tinh": "#,0"}
 
 
 def lines(text):
@@ -118,11 +121,11 @@ def src_ref(kind, prop):
     return {kind: {"Expression": {"SourceRef": {"Source": "b"}}, "Property": prop}}
 
 
-def top_n(col, by_measure, n, name):
+def top_n(col, by_measure, n, name, ascending=False):
     """Bo loc Top N theo mot measure (cung dang file PBIR ma Power BI Desktop ghi ra)."""
     sub = {"Version": 2, "From": [{"Name": "b", "Entity": ENT, "Type": 0}],
            "Select": [{**src_ref("Column", col), "Name": "field"}],
-           "OrderBy": [{"Direction": 2, "Expression": src_ref("Measure", by_measure)}], "Top": n}
+           "OrderBy": [{"Direction": 1 if ascending else 2, "Expression": src_ref("Measure", by_measure)}], "Top": n}
     return {"name": name.ljust(20, "0"), "field": field("Column", col), "type": "TopN",
             "filter": {"Version": 2,
                        "From": [{"Name": "subquery", "Expression": {"Subquery": {"Query": sub}}, "Type": 2},
@@ -176,12 +179,13 @@ def norm(s):
     return "".join(ch for ch in s if ch.isalnum())
 
 provinces = json.load(open(r"OUTLINE_PATH", encoding="utf-8"))
+plt.rcParams["font.family"] = ["Segoe UI", "DejaVu Sans"]
 fig, ax = plt.subplots()
 fig.patch.set_alpha(0)
 
 def draw_outline(fill=None):
     for f in provinces:
-        face = fill(f["name"]) if fill else "#efeeea"
+        face = fill(f["name"]) if fill else "#e8eeec"
         for ring in f["rings"]:
             ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor="white", linewidth=0.4))
 
@@ -194,18 +198,18 @@ ax.axis("off")
 PY_CHOROPLETH = PY_HEAD + '''
 from matplotlib.colors import LinearSegmentedColormap
 
-cmap = LinearSegmentedColormap.from_list("blues", ["#cde2fb", "#6da7ec", "#256abf", "#0d366b"])
-counts = {norm(p): v for p, v in zip(dataset["province"], dataset["So_ban_ghi"]) if isinstance(p, str)}
+cmap = LinearSegmentedColormap.from_list("blues", ["#e3f2ee", "#8fd0c1", "#1f9a82", "#0a3d34"])
+counts = {norm(p): int(v) for p, v in dataset["province"].dropna().value_counts().items()}
 top = max(counts.values()) if counts else 1
 
 def fill(name):
     v = counts.get(norm(name), 0)
-    return cmap(np.log1p(v) / np.log1p(top)) if v else "#efeeea"
+    return cmap(np.log1p(v) / np.log1p(top)) if v else "#e8eeec"
 
 draw_outline(fill)
 sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, np.log1p(top)))
 cb = plt.colorbar(sm, ax=ax, orientation="horizontal", shrink=0.6, pad=0.02, aspect=30)
-ticks = [t for t in (1, 10, 100, 1000) if t <= top * 0.6] + [top]
+ticks = [t for t in (1, 10, 100, 1000) if t <= top * 0.4] + [top]
 cb.set_ticks([np.log1p(t) for t in ticks])
 cb.set_ticklabels([f"{t:,}" for t in ticks])
 cb.set_label("Số bản ghi (thang log)")
@@ -217,17 +221,18 @@ PY_POINTS = PY_HEAD + '''
 draw_outline()
 d = dataset.dropna(subset=["decimalLongitude", "decimalLatitude"])
 blur = d["coord_imprecise"].astype(str).str.lower() == "true"
-ax.scatter(d.loc[~blur, "decimalLongitude"], d.loc[~blur, "decimalLatitude"], s=16, color="#d03b3b",
+ax.scatter(d.loc[~blur, "decimalLongitude"], d.loc[~blur, "decimalLatitude"], s=16, color="#c8412b",
            edgecolors="white", linewidths=0.5, alpha=0.85, label="Sai số ≤ 5 km")
 ax.scatter(d.loc[blur, "decimalLongitude"], d.loc[blur, "decimalLatitude"], s=30, facecolors="none",
-           edgecolors="#d03b3b", linewidths=1.0, label="Sai số > 5 km")
+           edgecolors="#c8412b", linewidths=1.0, label="Sai số > 5 km")
 ax.legend(loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=2, frameon=False, fontsize=8, title=f"{len(d):,} bản ghi nguy cấp")
 plt.tight_layout()
 plt.show()
 '''
 
 
-INK, INK2, MUTED, BORDER, SURFACE = "#0b0b0b", "#52514e", "#7a7974", "#e4e3df", "#fcfcfb"
+FONT, FONT_BOLD = "Segoe UI", "Segoe UI Semibold"  # ho tro day du dau tieng Viet
+INK, INK2, MUTED, BORDER, SURFACE = "#12201c", "#4a5a55", "#7b8b86", "#dfe5e2", "#f4f6f5"
 
 
 def container(title, style):
@@ -236,10 +241,13 @@ def container(title, style):
     if title:
         small = style == "slicer"
         o["title"] = [{"properties": {
-            "show": lit(True), "text": lit(title), "alignment": lit("left"), "bold": lit(not small),
+            "show": lit(True), "text": lit(title), "alignment": lit("left"), "bold": lit(False),
+            "fontFamily": lit(FONT if small else FONT_BOLD),
             "fontSize": lit(10 if small else 12), "fontColor": solid(MUTED if small else INK)}}]
     boxed = style in ("card", "slicer")
-    o["background"] = [{"properties": {"show": lit(boxed), "color": solid("#ffffff"), "transparency": lit(0)}}]
+    banner = style == "banner"
+    o["background"] = [{"properties": {"show": lit(boxed or banner), "color": solid(BANNER if banner else "#ffffff"),
+                                       "transparency": lit(0)}}]
     o["border"] = [{"properties": {"show": lit(boxed), "color": solid(BORDER),
                                    "radius": lit(8 if style == "slicer" else 12), "width": lit(1)}}]
     return o
@@ -247,7 +255,8 @@ def container(title, style):
 
 def labels(size=10):
     # labelDisplayUnits = 1: hien day du so (4.134), khong rut gon thanh 4,1K
-    return {"show": lit(True), "fontSize": lit(size), "color": solid(INK), "labelDisplayUnits": lit(1)}
+    return {"show": lit(True), "fontSize": lit(size), "color": solid(INK), "labelDisplayUnits": lit(1),
+            "fontFamily": lit(FONT)}
 
 
 def axes(show_value_axis=False, legend=False):
@@ -265,10 +274,12 @@ class Page:
     def __init__(self, key, name, display, height):
         self.key, self.name, self.display, self.height = key, name, display, height
         self.visuals = []
+        self.dy = 0  # do doi xuong cua cac visual phia duoi khi hang bo loc cao hon
 
     def add(self, vtype, x, y, w, h, query_state, *, objects=None, title=None, filters=None, sort=None, sync=None,
             style="card"):
         n = len(self.visuals) + 1
+        y = y + self.dy if y > 100 else y
         v = {"visualType": vtype, "query": {"queryState": query_state}, "drillFilterOtherVisuals": True}
         if sort:
             v["query"]["sortDefinition"] = sort
@@ -286,16 +297,20 @@ class Page:
         self.visuals.append(out)
 
     def headline(self, measure):
+        """Dai tieu de: ten trang, chu trang tren nen xanh dam."""
         self.add("card", 20, 15, 1240, 60, {"Values": {"projections": [proj("Measure", measure)]}},
-                 objects={"labels": [{"properties": {"fontSize": lit(20), "color": solid(INK)}}],
-                          "categoryLabels": [{"properties": {"show": lit(False)}}]}, style="plain")
+                 objects={"labels": [{"properties": {"fontSize": lit(20), "color": solid("#ffffff"),
+                                                     "fontFamily": lit(FONT_BOLD)}}],
+                          "categoryLabels": [{"properties": {"show": lit(False)}}]}, style="banner")
 
     def slicers(self, y=85):
+        """Hang bo loc dang dropdown (hien "All" khi chua chon): Nam, Loai ban ghi, Muc IUCN, Ho."""
         for i, (col, label) in enumerate([("nam_nhan", "Năm"), ("loai_ban_ghi", "Loại bản ghi"),
                                           ("iucn_group", "Mức IUCN"), ("family", "Họ")]):
             self.add("slicer", 20 + i * 313, y, 300, 62, {"Values": {"projections": [proj("Column", col, True)]}},
                      objects={"data": [{"properties": {"mode": lit("Dropdown")}}],
-                              "header": [{"properties": {"show": lit(False)}}]},
+                              "header": [{"properties": {"show": lit(False)}}],
+                              "items": [{"properties": {"textSize": lit(11), "fontFamily": lit(FONT)}}]},
                      title=label, sync=f"sync_{col}", style="slicer")
 
     def python(self, x, y, w, h, projections, code, title, filters=None):
@@ -316,44 +331,46 @@ SOURCE_NOTE = ("Nguồn: GBIF, thực vật Việt Nam, thu ngày 22/10/2026. M�
                "Số bản ghi phản ánh nơi có người đi ghi nhận, không phải nơi có nhiều cây. 2026* chưa hết năm.")
 
 
-def bar(page, x, y, w, h, cat_col, measure, title, *, n=None, top_by=None, color=None, flt=None, extra=None):
+def bar(page, x, y, w, h, cat_col, measure, title, *, n=None, top_by=None, color=None, flt=None, extra=None,
+        ascending=False):
     filters = list(flt or [])
     if n:
-        filters.append(top_n(cat_col, top_by or measure, n, f"f_{page.key}_{cat_col}"))
+        filters.append(top_n(cat_col, top_by or measure, n, f"f_{page.key}_{cat_col}", ascending))
     objects = dict(LABELS)
     if color:
         objects["dataPoint"] = [{"properties": {"fill": solid(color)}}] + (extra or [])
     page.add("clusteredBarChart", x, y, w, h,
              {"Category": {"projections": [proj("Column", cat_col, True)]},
               "Y": {"projections": [proj("Measure", measure)]}},
-             objects=objects, title=title, filters=filters, sort=sort_by("Measure", measure, "Descending"))
+             objects=objects, title=title, filters=filters,
+             sort=sort_by("Measure", measure, "Ascending" if ascending else "Descending"))
 
 
 def page_overview():
     p = Page("p1", "a1b2c3d4e5f6a7b8c9d1", "1. Tổng quan", 1240)
-    p.headline("Tieu_de_trang1")
+    p.headline("Ten_trang1")
     p.slicers()
     for i, (m, label) in enumerate([("So_ban_ghi", "Bản ghi"), ("So_loai", "Loài"), ("So_ho", "Họ"),
                                     ("So_tinh", "Tỉnh có dữ liệu"), ("Ty_le_IUCN", "Có mức IUCN")]):
         p.add("card", 20 + i * 250, 160, 240, 90, {"Values": {"projections": [proj("Measure", m, name=label)]}},
-              objects={"labels": [{"properties": {"fontSize": lit(28), "color": solid(INK),
-                                                  "labelDisplayUnits": lit(1)}}],
+              objects={"labels": [{"properties": {"fontSize": lit(28), "color": solid(PRIMARY),
+                                                  "labelDisplayUnits": lit(1), "fontFamily": lit(FONT_BOLD)}}],
                        "categoryLabels": [{"properties": {"show": lit(True), "fontSize": lit(11),
                                                           "color": solid(INK2)}}]})
-    p.python(20, 265, 610, 560, [proj("Column", "province"), proj("Measure", "So_ban_ghi")], PY_CHOROPLETH,
+    p.python(20, 265, 610, 560, [proj("Column", "province"), proj("Column", "gbifID")], PY_CHOROPLETH,
              "Số bản ghi theo tỉnh (bấm một thanh ở biểu đồ top 12 tỉnh để lọc cả trang)")
-    bar(p, 650, 265, 610, 275, "family", "So_ban_ghi", "Top 10 họ", n=10, color="#2a78d6")
+    bar(p, 650, 265, 610, 275, "family", "So_ban_ghi", "Top 10 họ", n=10, color=PRIMARY)
     bar(p, 650, 550, 610, 275, "species", "So_ban_ghi", "Top 10 loài (chỉ bản ghi định danh đến loài)", n=10,
-        top_by="So_ban_ghi_co_loai", color="#2a78d6", flt=[is_true("species_level", "f_p1_species_level")])
+        top_by="So_ban_ghi_co_loai", color=PRIMARY, flt=[is_true("species_level", "f_p1_species_level")])
     bar(p, 20, 845, 1240, 320, "province", "So_ban_ghi", "Top 12 tỉnh theo số bản ghi", n=12,
-        top_by="So_ban_ghi_co_tinh", color="#2a78d6")
+        top_by="So_ban_ghi_co_tinh", color=PRIMARY)
     p.note(1180, SOURCE_NOTE)
     return p
 
 
 def page_time():
     p = Page("p2", "a1b2c3d4e5f6a7b8c9d0", "2. Thời gian và nguồn", 1330)
-    p.headline("Tieu_de_trang2")
+    p.headline("Ten_trang2")
     p.slicers()
     ycat = lambda col: {"projections": [proj("Column", col, True)]}
     p.add("clusteredColumnChart", 20, 165, 610, 300,
@@ -375,7 +392,7 @@ def page_time():
     gradient = {"solid": {"color": {"expr": {"FillRule": {
         "Input": field("Measure", "So_ban_ghi"),
         "FillRule": {"linearGradient2": {
-            "min": {"color": lit("#cde2fb")["expr"]}, "max": {"color": lit("#0d366b")["expr"]},
+            "min": {"color": lit(RAMP_LOW)["expr"]}, "max": {"color": lit(RAMP_HIGH)["expr"]},
             "nullColoringStrategy": {"strategy": lit("asZero")["expr"]}}}}}}}}
     # heatmap to hon: chu 14, cot rong co dinh (tinh 200 + 7 nam x 140 = 1180, vua khung 1240), so can giua o
     width = lambda metadata, value: {"properties": {"value": lit(value)}, "selector": {"metadata": metadata}}
@@ -390,7 +407,7 @@ def page_time():
                                                      "alignment": lit("Center"), "autoSizeColumnWidth": lit(False)}}],
                    "rowHeaders": [{"properties": {"fontSize": lit(13), "fontColor": solid(INK)}}],
                    "columnWidth": [width(f"{ENT}.So_ban_ghi", 140), width(f"{ENT}.province", 200)],
-                   "values": [{"properties": {"fontSize": lit(14), "alignment": lit("Center")}},
+                   "values": [{"properties": {"fontSize": lit(14)}},
                               {"properties": {"backColor": gradient},
                                "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}],
                                             "metadata": f"{ENT}.So_ban_ghi"}}]},
@@ -403,7 +420,7 @@ def page_time():
 
 def page_conservation():
     p = Page("p3", "a1b2c3d4e5f6a7b8c9d2", "3. Bảo tồn", 900)
-    p.headline("Tieu_de_trang3")
+    p.headline("Ten_trang3")
     p.slicers()
     bar(p, 20, 165, 610, 300, "iucn_group", "So_ban_ghi", "Nhóm mức độ bảo tồn (IUCN)", color=GRAY,
         extra=[point_color("iucn_group", "Nguy cấp", RED)])
@@ -442,7 +459,7 @@ def build_report(pages):
     for p in pages:
         write_json(d / "pages" / p.name / "page.json", {
             "$schema": f"{SCHEMA}page/{V_PAGE}/schema.json", "name": p.name, "displayName": p.display,
-            "displayOption": "FitToPage", "height": p.height, "width": 1280,
+            "displayOption": "FitToPage", "height": p.height + p.dy, "width": 1280,
             "objects": {"background": [{"properties": {"color": solid(SURFACE), "transparency": lit(0)}}],
                         "outspace": [{"properties": {"color": solid(SURFACE)}}]}})
         for v in p.visuals:

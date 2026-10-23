@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ThucVat_VN"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a42e74c3-82dc-4665-8d08-e94f1ab40cc0"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Botanical Theme",
+  "dataColors": [
+    "#2E7D32",
+    "#81C784",
+    "#C86D51",
+    "#4CAF50",
+    "#A5D6A7",
+    "#8D6E63",
+    "#00897B",
+    "#D4E157"
+  ],
+  "background": "#F4F8F5",
+  "foreground": "#1B2E1E",
+  "tableAccent": "#2E7D32",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "dataTitle": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "boldLabel": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "semiboldLabel": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "label": {
+      "fontFace": "Segoe UI"
+    },
+    "largeLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "largeLightLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "lightLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "smallLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "smallLightLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "smallDataLabel": {
+      "fontFace": "Segoe UI"
+    }
+  }
+}

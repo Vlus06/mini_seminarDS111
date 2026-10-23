@@ -23,11 +23,11 @@
                       "Entity": "ban_ghi"
                     }
                   },
-                  "Property": "Tieu_de_trang3"
+                  "Property": "Ten_trang3"
                 }
               },
-              "queryRef": "ban_ghi.Tieu_de_trang3",
-              "nativeQueryRef": "Tieu_de_trang3"
+              "queryRef": "ban_ghi.Ten_trang3",
+              "nativeQueryRef": "Ten_trang3"
             }
           ]
         }
@@ -50,9 +50,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0b0b0b'"
+                      "Value": "'#ffffff'"
                     }
                   }
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
                 }
               }
             }
@@ -80,7 +87,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -89,7 +96,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#ffffff'"
+                      "Value": "'#0f3d36'"
                     }
                   }
                 }
@@ -120,7 +127,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#e4e3df'"
+                      "Value": "'#dfe5e2'"
                     }
                   }
                 }

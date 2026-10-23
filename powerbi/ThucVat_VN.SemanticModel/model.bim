@@ -1,7 +1,182 @@
 {
-  "compatibilityLevel": 1567,
+  "compatibilityLevel": 1606,
   "model": {
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"ban_ghi\"]"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
     "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Entities": {
+              "ban_ghi.nam_nhan": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "nam_nhan"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Năm": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "ban_ghi.province": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "province"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Tỉnh": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "ban_ghi.so_ban_ghi": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "So_ban_ghi"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Bản ghi": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "ban_ghi.so_ho": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "So_ho"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Họ": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "ban_ghi.so_loai": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "So_loai"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Loài": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "ban_ghi.so_tinh": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "So_tinh"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Tỉnh có dữ liệu": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "ban_ghi.ty_le_iucn": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "ban_ghi",
+                    "ConceptualProperty": "Ty_le_IUCN"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Có mức IUCN": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              }
+            },
+            "Language": "en-US",
+            "Version": "2.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
     "defaultPowerBIDataSourceVersion": "powerBI_V3",
     "sourceQueryCulture": "en-US",
     "tables": [
@@ -11,198 +186,382 @@
           {
             "name": "gbifID",
             "dataType": "int64",
-            "sourceColumn": "gbifID",
             "formatString": "0",
+            "lineageTag": "4b4a33fd-cf75-46c5-90d4-e8640ff36ab9",
+            "sourceColumn": "gbifID",
             "summarizeBy": "none"
           },
           {
             "name": "scientificName",
             "dataType": "string",
+            "lineageTag": "d2dde5ff-23c9-4ae9-906b-978dd6da682b",
             "sourceColumn": "scientificName"
           },
           {
             "name": "species",
             "dataType": "string",
+            "lineageTag": "f038ea46-94b4-471f-8de4-443219f027b3",
             "sourceColumn": "species"
           },
           {
             "name": "genus",
             "dataType": "string",
+            "lineageTag": "33b821ee-3970-4fba-bb14-5fb0cb13412e",
             "sourceColumn": "genus"
           },
           {
             "name": "family",
             "dataType": "string",
+            "lineageTag": "dd4ee1bf-26eb-402c-9060-b0e0f0a8202e",
             "sourceColumn": "family"
           },
           {
             "name": "order",
             "dataType": "string",
+            "lineageTag": "a9ebf0a0-79ce-4e14-b9d4-87b3e08a2e7c",
             "sourceColumn": "order"
           },
           {
             "name": "class",
             "dataType": "string",
+            "lineageTag": "5ded9851-e6c7-4db7-a2db-3c018f18366b",
             "sourceColumn": "class"
           },
           {
             "name": "phylum",
             "dataType": "string",
+            "lineageTag": "bb2f2b0d-4ce2-47e2-8070-24befa4e3b66",
             "sourceColumn": "phylum"
           },
           {
             "name": "taxonRank",
             "dataType": "string",
+            "lineageTag": "27145d17-0a9a-40d2-a1dc-4f31f11d929a",
             "sourceColumn": "taxonRank"
           },
           {
             "name": "iucnRedListCategory",
             "dataType": "string",
+            "lineageTag": "6aabdabe-4ff8-46f0-b21c-74f1a2474a6a",
             "sourceColumn": "iucnRedListCategory"
           },
           {
             "name": "basisOfRecord",
             "dataType": "string",
+            "lineageTag": "0f900536-d0af-49e2-a5e1-5bcc1e2022b7",
             "sourceColumn": "basisOfRecord"
           },
           {
             "name": "datasetName",
             "dataType": "string",
+            "lineageTag": "0c1e1038-ef59-470d-a635-351083ef1ba1",
             "sourceColumn": "datasetName"
           },
           {
             "name": "institutionCode",
             "dataType": "string",
+            "lineageTag": "84a48442-f006-491a-850b-29a58a5fa452",
             "sourceColumn": "institutionCode"
           },
           {
             "name": "year",
             "dataType": "int64",
-            "sourceColumn": "year",
             "formatString": "0",
+            "lineageTag": "6cde4117-ee0b-46f4-a82f-9b9ea07cc62e",
+            "sourceColumn": "year",
             "summarizeBy": "none"
           },
           {
             "name": "month",
             "dataType": "int64",
-            "sourceColumn": "month",
             "formatString": "0",
+            "lineageTag": "d35f2181-8b8e-43bc-8f1a-9c64ce05ad01",
+            "sourceColumn": "month",
             "summarizeBy": "none"
           },
           {
             "name": "day",
             "dataType": "int64",
-            "sourceColumn": "day",
             "formatString": "0",
+            "lineageTag": "cb3824b9-563a-45c6-b0fa-7180978c468f",
+            "sourceColumn": "day",
             "summarizeBy": "none"
           },
           {
             "name": "decimalLatitude",
+            "dataCategory": "latitude",
             "dataType": "double",
+            "lineageTag": "d70933c3-1d4d-4ce3-9fe2-e818e541cf25",
             "sourceColumn": "decimalLatitude",
-            "summarizeBy": "none",
-            "dataCategory": "latitude"
+            "summarizeBy": "none"
           },
           {
             "name": "decimalLongitude",
+            "dataCategory": "longitude",
             "dataType": "double",
+            "lineageTag": "91009277-ef6a-4bcd-8f50-e69a0fb99f50",
             "sourceColumn": "decimalLongitude",
-            "summarizeBy": "none",
-            "dataCategory": "longitude"
+            "summarizeBy": "none"
           },
           {
             "name": "coordinateUncertaintyInMeters",
             "dataType": "double",
+            "lineageTag": "aaf135ce-9c08-4dee-93bb-901d027eede4",
             "sourceColumn": "coordinateUncertaintyInMeters",
             "summarizeBy": "none"
           },
           {
             "name": "license",
             "dataType": "string",
+            "lineageTag": "3bd769bc-6149-4a0c-ade6-e7d7978c3ce4",
             "sourceColumn": "license"
           },
           {
             "name": "is_assessed",
             "dataType": "boolean",
-            "sourceColumn": "is_assessed",
-            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "c9c2cd5a-5148-4b9b-ba5d-ba55c4c4efec",
+            "sourceColumn": "is_assessed"
           },
           {
             "name": "is_threatened",
             "dataType": "boolean",
-            "sourceColumn": "is_threatened",
-            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "e7e03da1-89c2-47d7-93c7-c50813ddfb77",
+            "sourceColumn": "is_threatened"
           },
           {
             "name": "source_type",
             "dataType": "string",
+            "lineageTag": "274bbd23-f7a9-452b-9a2f-d4af804a5912",
             "sourceColumn": "source_type"
           },
           {
             "name": "year_month",
             "dataType": "string",
+            "lineageTag": "96988bf9-be82-412a-9ffc-ff3cfb8dba27",
             "sourceColumn": "year_month"
           },
           {
             "name": "province",
+            "dataCategory": "stateOrProvince",
             "dataType": "string",
-            "sourceColumn": "province",
-            "dataCategory": "stateOrProvince"
+            "lineageTag": "137ecbcf-ad24-4457-ba19-3c7cd9f8ef7b",
+            "sourceColumn": "province"
           },
           {
             "name": "species_level",
             "dataType": "boolean",
-            "sourceColumn": "species_level",
-            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "55409ac3-bc61-455a-ae7b-04a24a899234",
+            "sourceColumn": "species_level"
           },
           {
             "name": "iucn_group",
             "dataType": "string",
-            "sourceColumn": "iucn_group",
-            "sortByColumn": "iucn_thu_tu"
+            "lineageTag": "cd679ade-792b-491c-a525-708db1fa3a93",
+            "sortByColumn": "iucn_thu_tu",
+            "sourceColumn": "iucn_group"
           },
           {
             "name": "coord_imprecise",
             "dataType": "boolean",
-            "sourceColumn": "coord_imprecise",
-            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "d3a13a80-3ec7-4eb9-a83d-c5b976649a34",
+            "sourceColumn": "coord_imprecise"
           },
           {
             "name": "nam_nhan",
             "dataType": "string",
+            "lineageTag": "d6570c88-d697-463b-8a14-d2eccdbc759e",
             "sourceColumn": "nam_nhan"
           },
           {
             "name": "thang_nhan",
             "dataType": "string",
-            "sourceColumn": "thang_nhan",
-            "sortByColumn": "month"
+            "lineageTag": "c34fd930-77bb-4db1-9314-51db9bcb5c1d",
+            "sortByColumn": "month",
+            "sourceColumn": "thang_nhan"
           },
           {
             "name": "loai_ban_ghi",
             "dataType": "string",
-            "sourceColumn": "loai_ban_ghi",
-            "sortByColumn": "loai_ban_ghi_thu_tu"
+            "lineageTag": "419c72ce-17e2-4b41-a409-725dd3c246ac",
+            "sortByColumn": "loai_ban_ghi_thu_tu",
+            "sourceColumn": "loai_ban_ghi"
           },
           {
             "name": "loai_ban_ghi_thu_tu",
             "dataType": "int64",
-            "sourceColumn": "loai_ban_ghi_thu_tu",
             "formatString": "0",
+            "lineageTag": "76c9d659-cfe2-4f61-b32f-7d64aa9e6a96",
+            "sourceColumn": "loai_ban_ghi_thu_tu",
             "summarizeBy": "none"
           },
           {
             "name": "iucn_thu_tu",
             "dataType": "int64",
-            "sourceColumn": "iucn_thu_tu",
             "formatString": "0",
+            "lineageTag": "aee2e3a0-9986-43f8-8572-c1711f031af3",
+            "sourceColumn": "iucn_thu_tu",
             "summarizeBy": "none"
           },
           {
             "name": "dia_diem",
+            "dataCategory": "place",
             "dataType": "string",
-            "sourceColumn": "dia_diem",
-            "dataCategory": "place"
+            "lineageTag": "6a78050a-d759-45a9-92e6-db0dd078f8ea",
+            "sourceColumn": "dia_diem"
+          }
+        ],
+        "lineageTag": "23a23499-78fe-4b2f-815b-c4f8eac65b24",
+        "measures": [
+          {
+            "name": "So_ban_ghi",
+            "expression": "COUNTROWS(ban_ghi)",
+            "formatString": "#,0",
+            "lineageTag": "8258d68f-b05b-4424-961e-c9f8e61e5c9b"
+          },
+          {
+            "name": "So_ban_ghi_co_tinh",
+            "expression": "IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_ban_ghi])",
+            "formatString": "#,0",
+            "lineageTag": "de42bdc7-cf81-4b0b-a8fe-f7c058f07e5f"
+          },
+          {
+            "name": "So_ban_ghi_co_loai",
+            "expression": "IF(HASONEVALUE(ban_ghi[species]) && ISBLANK(SELECTEDVALUE(ban_ghi[species])), BLANK(), [So_ban_ghi])",
+            "formatString": "#,0",
+            "lineageTag": "b1038602-9588-474b-b5f0-13dad34616d1"
+          },
+          {
+            "name": "So_loai",
+            "expression": "CALCULATE(DISTINCTCOUNT(ban_ghi[species]), ban_ghi[species_level] = TRUE())",
+            "formatString": "#,0",
+            "lineageTag": "d4a221d2-f3bf-4076-b10f-9ca60916c858"
+          },
+          {
+            "name": "So_ho",
+            "expression": "DISTINCTCOUNTNOBLANK(ban_ghi[family])",
+            "formatString": "#,0",
+            "lineageTag": "a8873e06-307f-4c0a-9578-d2275ec6d703"
+          },
+          {
+            "name": "So_tinh",
+            "expression": "DISTINCTCOUNTNOBLANK(ban_ghi[province])",
+            "formatString": "#,0",
+            "lineageTag": "91f87310-0a78-4139-a470-b5504b5cc920"
+          },
+          {
+            "name": "Ty_le_IUCN",
+            "expression": "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] <> \"Chưa đánh giá\"), [So_ban_ghi])",
+            "formatString": "0%",
+            "lineageTag": "f0a2fc3f-6801-48af-9244-f23f4d8d885b"
+          },
+          {
+            "name": "Ty_le_chua_danh_gia",
+            "expression": "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = \"Chưa đánh giá\"), [So_ban_ghi])",
+            "formatString": "0%",
+            "lineageTag": "bace7257-f4d3-4dbf-95f6-8555a0192d6d"
+          },
+          {
+            "name": "So_nguy_cap",
+            "expression": "CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = \"Nguy cấp\")",
+            "formatString": "#,0",
+            "lineageTag": "286ed0ae-79bd-4f9e-8dfb-874eb39db388"
+          },
+          {
+            "name": "Ty_le_nguy_cap",
+            "expression": "DIVIDE([So_nguy_cap], [So_ban_ghi])",
+            "formatString": "0%",
+            "lineageTag": "9f809297-42e2-4a27-bceb-3c165cf760cf"
+          },
+          {
+            "name": "So_nguy_cap_co_tinh",
+            "expression": "IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_nguy_cap])",
+            "formatString": "#,0",
+            "lineageTag": "7c9aaeaf-eb5b-4caa-853e-50a8cb6fe220"
+          },
+          {
+            "name": "Ty_le_tieu_ban",
+            "expression": "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[loai_ban_ghi] = \"Tiêu bản\"), [So_ban_ghi])",
+            "formatString": "0%",
+            "lineageTag": "bf6fafc9-47e6-4002-9221-ea17e31f7174"
+          },
+          {
+            "name": "Top5_tinh_ty_le",
+            "expression": [
+              "VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))",
+              "        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)",
+              "        RETURN DIVIDE(",
+              "            SUMX(Top5, [So_ban_ghi]),",
+              "            CALCULATE([So_ban_ghi], ban_ghi[province] <> BLANK())",
+              "        )"
+            ],
+            "formatString": "0%",
+            "lineageTag": "1597b3ac-3f5b-4fb5-8992-7b6f64abdbb3"
+          },
+          {
+            "name": "Top5_tinh_ten",
+            "expression": [
+              "VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))",
+              "        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)",
+              "        RETURN CONCATENATEX(Top5, ban_ghi[province], \", \", [So_ban_ghi], DESC)"
+            ],
+            "lineageTag": "efc9ed32-131b-4dc5-8823-a7c1c8a97547"
+          },
+          {
+            "name": "Ten_trang1",
+            "expression": "\"Phân tích phân bố không gian và thành phần loài thực vật được ghi nhận\"",
+            "lineageTag": "24ffd50a-9517-4074-8bad-f8e841eb0f7d"
+          },
+          {
+            "name": "Ten_trang2",
+            "expression": "\"Phân tích xu hướng và cơ cấu nguồn ghi nhận theo thời gian (2020–2026)\"",
+            "lineageTag": "77f1d04e-b25b-4643-acd5-ae96dabf2d92"
+          },
+          {
+            "name": "Ten_trang3",
+            "expression": "\"Đánh giá mức độ bảo tồn và khoảng trống đánh giá IUCN của loài nguy cấp\"",
+            "lineageTag": "bfe702e0-3e53-48bb-b69d-303a7281555f"
+          },
+          {
+            "name": "Tieu_de_trang1",
+            "expression": [
+              "\"Năm tỉnh đầu bảng (\" & [Top5_tinh_ten] & \") chiếm \" &",
+              "        FORMAT([Top5_tinh_ty_le], \"0%\") & \" bản ghi có tỉnh.\""
+            ],
+            "lineageTag": "dfba0bc8-5191-45c7-a596-7953ece4d22a"
+          },
+          {
+            "name": "Tieu_de_trang2",
+            "expression": [
+              "VAR Nam = FILTER(ALLSELECTED(ban_ghi[year]), ban_ghi[year] <= 2025)",
+              "        VAR NamDau = MINX(Nam, ban_ghi[year])",
+              "        VAR NamCuoi = MAXX(Nam, ban_ghi[year])",
+              "        VAR NamDinh = MAXX(TOPN(1, Nam, [So_ban_ghi], DESC), ban_ghi[year])",
+              "        VAR Gap = DIVIDE(",
+              "            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDinh),",
+              "            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDau)",
+              "        )",
+              "        RETURN IF(",
+              "            NamDau = NamCuoi,",
+              "            \"Chọn từ hai năm trở lên để xem xu hướng.\",",
+              "            \"Ghi nhận tăng gấp \" & FORMAT(Gap, \"0.0\", \"vi-VN\") & \" lần (\" & NamDau & \" đến \" & NamDinh &",
+              "            \"), nhưng tiêu bản chỉ còn \" &",
+              "            FORMAT(CALCULATE([Ty_le_tieu_ban], ban_ghi[year] = NamCuoi), \"0%\") &",
+              "            \" bản ghi năm \" & NamCuoi & \".\"",
+              "        )"
+            ],
+            "lineageTag": "29ce7cff-ca61-4e7b-bb1a-38cb69604183"
+          },
+          {
+            "name": "Tieu_de_trang3",
+            "expression": [
+              "\"Chỉ \" & FORMAT([Ty_le_nguy_cap], \"0%\") & \" bản ghi là loài nguy cấp, và \" &",
+              "        FORMAT([Ty_le_chua_danh_gia], \"0%\") & \" chưa được đánh giá IUCN.\""
+            ],
+            "lineageTag": "89b1f56d-a168-492b-86fb-14d1ea93ef8e"
           }
         ],
         "partitions": [
@@ -210,7 +569,6 @@
             "name": "ban_ghi",
             "mode": "import",
             "source": {
-              "type": "m",
               "expression": [
                 "let",
                 "    DuongDan = \"C:\\DS111\\miniseminar\\vn_plants_clean.csv\",",
@@ -246,157 +604,11 @@
                 "        if [province] = null then null else [province] & \", Việt Nam\", type text)",
                 "in",
                 "    DiaDiem"
-              ]
+              ],
+              "type": "m"
             }
           }
-        ],
-        "measures": [
-          {
-            "name": "So_ban_ghi",
-            "expression": [
-              "COUNTROWS(ban_ghi)"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "So_ban_ghi_co_tinh",
-            "expression": [
-              "IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_ban_ghi])"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "So_ban_ghi_co_loai",
-            "expression": [
-              "IF(HASONEVALUE(ban_ghi[species]) && ISBLANK(SELECTEDVALUE(ban_ghi[species])), BLANK(), [So_ban_ghi])"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "So_loai",
-            "expression": [
-              "CALCULATE(DISTINCTCOUNT(ban_ghi[species]), ban_ghi[species_level] = TRUE())"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "So_ho",
-            "expression": [
-              "DISTINCTCOUNTNOBLANK(ban_ghi[family])"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "So_tinh",
-            "expression": [
-              "DISTINCTCOUNTNOBLANK(ban_ghi[province])"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "Ty_le_IUCN",
-            "expression": [
-              "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] <> \"Chưa đánh giá\"), [So_ban_ghi])"
-            ],
-            "formatString": "0%"
-          },
-          {
-            "name": "Ty_le_chua_danh_gia",
-            "expression": [
-              "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = \"Chưa đánh giá\"), [So_ban_ghi])"
-            ],
-            "formatString": "0%"
-          },
-          {
-            "name": "So_nguy_cap",
-            "expression": [
-              "CALCULATE([So_ban_ghi], ban_ghi[iucn_group] = \"Nguy cấp\")"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "Ty_le_nguy_cap",
-            "expression": [
-              "DIVIDE([So_nguy_cap], [So_ban_ghi])"
-            ],
-            "formatString": "0%"
-          },
-          {
-            "name": "So_nguy_cap_co_tinh",
-            "expression": [
-              "IF(HASONEVALUE(ban_ghi[province]) && ISBLANK(SELECTEDVALUE(ban_ghi[province])), BLANK(), [So_nguy_cap])"
-            ],
-            "formatString": "#,0"
-          },
-          {
-            "name": "Ty_le_tieu_ban",
-            "expression": [
-              "DIVIDE(CALCULATE([So_ban_ghi], ban_ghi[loai_ban_ghi] = \"Tiêu bản\"), [So_ban_ghi])"
-            ],
-            "formatString": "0%"
-          },
-          {
-            "name": "Top5_tinh_ty_le",
-            "expression": [
-              "VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))",
-              "        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)",
-              "        RETURN DIVIDE(",
-              "            SUMX(Top5, [So_ban_ghi]),",
-              "            CALCULATE([So_ban_ghi], ban_ghi[province] <> BLANK())",
-              "        )"
-            ],
-            "formatString": "0%"
-          },
-          {
-            "name": "Top5_tinh_ten",
-            "expression": [
-              "VAR CoTinh = FILTER(VALUES(ban_ghi[province]), NOT ISBLANK(ban_ghi[province]))",
-              "        VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)",
-              "        RETURN CONCATENATEX(Top5, ban_ghi[province], \", \", [So_ban_ghi], DESC)"
-            ]
-          },
-          {
-            "name": "Tieu_de_trang1",
-            "expression": [
-              "\"Năm tỉnh đầu bảng (\" & [Top5_tinh_ten] & \") chiếm \" &",
-              "        FORMAT([Top5_tinh_ty_le], \"0%\") & \" bản ghi có tỉnh.\""
-            ]
-          },
-          {
-            "name": "Tieu_de_trang2",
-            "expression": [
-              "VAR Nam = FILTER(ALLSELECTED(ban_ghi[year]), ban_ghi[year] <= 2025)",
-              "        VAR NamDau = MINX(Nam, ban_ghi[year])",
-              "        VAR NamCuoi = MAXX(Nam, ban_ghi[year])",
-              "        VAR NamDinh = MAXX(TOPN(1, Nam, [So_ban_ghi], DESC), ban_ghi[year])",
-              "        VAR Gap = DIVIDE(",
-              "            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDinh),",
-              "            CALCULATE([So_ban_ghi], ban_ghi[year] = NamDau)",
-              "        )",
-              "        RETURN IF(",
-              "            NamDau = NamCuoi,",
-              "            \"Chọn từ hai năm trở lên để xem xu hướng.\",",
-              "            \"Ghi nhận tăng gấp \" & FORMAT(Gap, \"0.0\", \"vi-VN\") & \" lần (\" & NamDau & \" đến \" & NamDinh &",
-              "            \"), nhưng tiêu bản chỉ còn \" &",
-              "            FORMAT(CALCULATE([Ty_le_tieu_ban], ban_ghi[year] = NamCuoi), \"0%\") &",
-              "            \" bản ghi năm \" & NamCuoi & \".\"",
-              "        )"
-            ]
-          },
-          {
-            "name": "Tieu_de_trang3",
-            "expression": [
-              "\"Chỉ \" & FORMAT([Ty_le_nguy_cap], \"0%\") & \" bản ghi là loài nguy cấp, và \" &",
-              "        FORMAT([Ty_le_chua_danh_gia], \"0%\") & \" chưa được đánh giá IUCN.\""
-            ]
-          }
         ]
-      }
-    ],
-    "annotations": [
-      {
-        "name": "PBI_QueryOrder",
-        "value": "[\"ban_ghi\"]"
       }
     ]
   }

@@ -83,7 +83,7 @@
             "source": {
               "expr": {
                 "Literal": {
-                  "Value": "'import json\nimport unicodedata\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Polygon\n\ndef norm(s):\n    s = unicodedata.normalize(\"NFC\", str(s)).lower()\n    return \"\".join(ch for ch in s if ch.isalnum())\n\nprovinces = json.load(open(r\"C:\\DS111\\miniseminar\\assets\\vn_provinces.json\", encoding=\"utf-8\"))\nfig, ax = plt.subplots()\nfig.patch.set_alpha(0)\n\ndef draw_outline(fill=None):\n    for f in provinces:\n        face = fill(f[\"name\"]) if fill else \"#efeeea\"\n        for ring in f[\"rings\"]:\n            ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor=\"white\", linewidth=0.4))\n\nax.set_xlim(102, 109.6)\nax.set_ylim(8.2, 23.6)\nax.set_aspect(1 / np.cos(np.radians(16)))\nax.axis(\"off\")\n\ndraw_outline()\nd = dataset.dropna(subset=[\"decimalLongitude\", \"decimalLatitude\"])\nblur = d[\"coord_imprecise\"].astype(str).str.lower() == \"true\"\nax.scatter(d.loc[~blur, \"decimalLongitude\"], d.loc[~blur, \"decimalLatitude\"], s=16, color=\"#d03b3b\",\n           edgecolors=\"white\", linewidths=0.5, alpha=0.85, label=\"Sai số ≤ 5 km\")\nax.scatter(d.loc[blur, \"decimalLongitude\"], d.loc[blur, \"decimalLatitude\"], s=30, facecolors=\"none\",\n           edgecolors=\"#d03b3b\", linewidths=1.0, label=\"Sai số > 5 km\")\nax.legend(loc=\"upper center\", bbox_to_anchor=(0.5, 0.0), ncol=2, frameon=False, fontsize=8, title=f\"{len(d):,} bản ghi nguy cấp\")\nplt.tight_layout()\nplt.show()\n'"
+                  "Value": "'import json\nimport unicodedata\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Polygon\n\ndef norm(s):\n    s = unicodedata.normalize(\"NFC\", str(s)).lower()\n    return \"\".join(ch for ch in s if ch.isalnum())\n\nprovinces = json.load(open(r\"C:\\DS111\\miniseminar\\assets\\vn_provinces.json\", encoding=\"utf-8\"))\nplt.rcParams[\"font.family\"] = [\"Segoe UI\", \"DejaVu Sans\"]\nfig, ax = plt.subplots()\nfig.patch.set_alpha(0)\n\ndef draw_outline(fill=None):\n    for f in provinces:\n        face = fill(f[\"name\"]) if fill else \"#e8eeec\"\n        for ring in f[\"rings\"]:\n            ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor=\"white\", linewidth=0.4))\n\nax.set_xlim(102, 109.6)\nax.set_ylim(8.2, 23.6)\nax.set_aspect(1 / np.cos(np.radians(16)))\nax.axis(\"off\")\n\ndraw_outline()\nd = dataset.dropna(subset=[\"decimalLongitude\", \"decimalLatitude\"])\nblur = d[\"coord_imprecise\"].astype(str).str.lower() == \"true\"\nax.scatter(d.loc[~blur, \"decimalLongitude\"], d.loc[~blur, \"decimalLatitude\"], s=16, color=\"#c8412b\",\n           edgecolors=\"white\", linewidths=0.5, alpha=0.85, label=\"Sai số ≤ 5 km\")\nax.scatter(d.loc[blur, \"decimalLongitude\"], d.loc[blur, \"decimalLatitude\"], s=30, facecolors=\"none\",\n           edgecolors=\"#c8412b\", linewidths=1.0, label=\"Sai số > 5 km\")\nax.legend(loc=\"upper center\", bbox_to_anchor=(0.5, 0.0), ncol=2, frameon=False, fontsize=8, title=f\"{len(d):,} bản ghi nguy cấp\")\nplt.tight_layout()\nplt.show()\n'"
                 }
               }
             },
@@ -126,7 +126,14 @@
             "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
                 }
               }
             },
@@ -142,7 +149,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0b0b0b'"
+                      "Value": "'#12201c'"
                     }
                   }
                 }
@@ -197,7 +204,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#e4e3df'"
+                      "Value": "'#dfe5e2'"
                     }
                   }
                 }

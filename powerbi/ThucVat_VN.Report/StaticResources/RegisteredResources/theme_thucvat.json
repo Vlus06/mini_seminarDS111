@@ -1,13 +1,110 @@
 {
-  "name": "Thuc vat Viet Nam",
-  "dataColors": ["#2a78d6", "#eb6834", "#b8b7b0", "#d03b3b", "#1baf7a", "#e87ba4", "#6250d6", "#eda100"],
+  "name": "Rung - Thuc vat Viet Nam",
+  "dataColors": [
+    "#0f8a73",
+    "#e9a23b",
+    "#9aa5b1",
+    "#c8412b",
+    "#3b6ea5",
+    "#7a5195",
+    "#5fa8a0",
+    "#d4813a"
+  ],
   "background": "#ffffff",
-  "foreground": "#0b0b0b",
-  "tableAccent": "#2a78d6",
-  "good": "#0ca30c",
-  "neutral": "#fab219",
-  "bad": "#d03b3b",
-  "minimum": "#cde2fb",
-  "center": "#6da7ec",
-  "maximum": "#0d366b"
+  "foreground": "#12201c",
+  "tableAccent": "#0f8a73",
+  "good": "#0f8a73",
+  "neutral": "#e9a23b",
+  "bad": "#c8412b",
+  "minimum": "#e3f2ee",
+  "center": "#8fd0c1",
+  "maximum": "#0a3d34",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "dataTitle": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "boldLabel": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "semiboldLabel": {
+      "fontFace": "Segoe UI Semibold"
+    },
+    "label": {
+      "fontFace": "Segoe UI"
+    },
+    "largeLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "largeLightLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "lightLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "smallLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "smallLightLabel": {
+      "fontFace": "Segoe UI"
+    },
+    "smallDataLabel": {
+      "fontFace": "Segoe UI"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "fontSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#12201c"
+              }
+            },
+            "alignment": "left"
+          }
+        ],
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#ffffff"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#dfe5e2"
+              }
+            },
+            "radius": 12
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ]
+      }
+    }
+  }
 }

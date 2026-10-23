@@ -31,17 +31,17 @@
             },
             {
               "field": {
-                "Measure": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
                       "Entity": "ban_ghi"
                     }
                   },
-                  "Property": "So_ban_ghi"
+                  "Property": "gbifID"
                 }
               },
-              "queryRef": "ban_ghi.So_ban_ghi",
-              "nativeQueryRef": "So_ban_ghi"
+              "queryRef": "ban_ghi.gbifID",
+              "nativeQueryRef": "gbifID"
             }
           ]
         }
@@ -55,7 +55,7 @@
             "source": {
               "expr": {
                 "Literal": {
-                  "Value": "'import json\nimport unicodedata\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Polygon\n\ndef norm(s):\n    s = unicodedata.normalize(\"NFC\", str(s)).lower()\n    return \"\".join(ch for ch in s if ch.isalnum())\n\nprovinces = json.load(open(r\"C:\\DS111\\miniseminar\\assets\\vn_provinces.json\", encoding=\"utf-8\"))\nfig, ax = plt.subplots()\nfig.patch.set_alpha(0)\n\ndef draw_outline(fill=None):\n    for f in provinces:\n        face = fill(f[\"name\"]) if fill else \"#efeeea\"\n        for ring in f[\"rings\"]:\n            ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor=\"white\", linewidth=0.4))\n\nax.set_xlim(102, 109.6)\nax.set_ylim(8.2, 23.6)\nax.set_aspect(1 / np.cos(np.radians(16)))\nax.axis(\"off\")\n\nfrom matplotlib.colors import LinearSegmentedColormap\n\ncmap = LinearSegmentedColormap.from_list(\"blues\", [\"#cde2fb\", \"#6da7ec\", \"#256abf\", \"#0d366b\"])\ncounts = {norm(p): v for p, v in zip(dataset[\"province\"], dataset[\"So_ban_ghi\"]) if isinstance(p, str)}\ntop = max(counts.values()) if counts else 1\n\ndef fill(name):\n    v = counts.get(norm(name), 0)\n    return cmap(np.log1p(v) / np.log1p(top)) if v else \"#efeeea\"\n\ndraw_outline(fill)\nsm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, np.log1p(top)))\ncb = plt.colorbar(sm, ax=ax, orientation=\"horizontal\", shrink=0.6, pad=0.02, aspect=30)\nticks = [t for t in (1, 10, 100, 1000) if t <= top * 0.6] + [top]\ncb.set_ticks([np.log1p(t) for t in ticks])\ncb.set_ticklabels([f\"{t:,}\" for t in ticks])\ncb.set_label(\"Số bản ghi (thang log)\")\nplt.tight_layout()\nplt.show()\n'"
+                  "Value": "'import json\nimport unicodedata\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Polygon\n\ndef norm(s):\n    s = unicodedata.normalize(\"NFC\", str(s)).lower()\n    return \"\".join(ch for ch in s if ch.isalnum())\n\nprovinces = json.load(open(r\"C:\\DS111\\miniseminar\\assets\\vn_provinces.json\", encoding=\"utf-8\"))\nplt.rcParams[\"font.family\"] = [\"Segoe UI\", \"DejaVu Sans\"]\nfig, ax = plt.subplots()\nfig.patch.set_alpha(0)\n\ndef draw_outline(fill=None):\n    for f in provinces:\n        face = fill(f[\"name\"]) if fill else \"#e8eeec\"\n        for ring in f[\"rings\"]:\n            ax.add_patch(Polygon(ring, closed=True, facecolor=face, edgecolor=\"white\", linewidth=0.4))\n\nax.set_xlim(102, 109.6)\nax.set_ylim(8.2, 23.6)\nax.set_aspect(1 / np.cos(np.radians(16)))\nax.axis(\"off\")\n\nfrom matplotlib.colors import LinearSegmentedColormap\n\ncmap = LinearSegmentedColormap.from_list(\"blues\", [\"#e3f2ee\", \"#8fd0c1\", \"#1f9a82\", \"#0a3d34\"])\ncounts = {norm(p): int(v) for p, v in dataset[\"province\"].dropna().value_counts().items()}\ntop = max(counts.values()) if counts else 1\n\ndef fill(name):\n    v = counts.get(norm(name), 0)\n    return cmap(np.log1p(v) / np.log1p(top)) if v else \"#e8eeec\"\n\ndraw_outline(fill)\nsm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0, np.log1p(top)))\ncb = plt.colorbar(sm, ax=ax, orientation=\"horizontal\", shrink=0.6, pad=0.02, aspect=30)\nticks = [t for t in (1, 10, 100, 1000) if t <= top * 0.4] + [top]\ncb.set_ticks([np.log1p(t) for t in ticks])\ncb.set_ticklabels([f\"{t:,}\" for t in ticks])\ncb.set_label(\"Số bản ghi (thang log)\")\nplt.tight_layout()\nplt.show()\n'"
                 }
               }
             },
@@ -98,7 +98,14 @@
             "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
                 }
               }
             },
@@ -114,7 +121,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0b0b0b'"
+                      "Value": "'#12201c'"
                     }
                   }
                 }
@@ -169,7 +176,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#e4e3df'"
+                      "Value": "'#dfe5e2'"
                     }
                   }
                 }

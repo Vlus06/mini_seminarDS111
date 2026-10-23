@@ -54,6 +54,13 @@ DEFINE
         VAR Top5 = TOPN(5, CoTinh, [So_ban_ghi], DESC)
         RETURN CONCATENATEX(Top5, ban_ghi[province], ", ", [So_ban_ghi], DESC)
 
+    // Ten trang (dai tieu de o dau moi trang)
+    MEASURE ban_ghi[Ten_trang1] = "Phân tích phân bố không gian và thành phần loài thực vật được ghi nhận"
+
+    MEASURE ban_ghi[Ten_trang2] = "Phân tích xu hướng và cơ cấu nguồn ghi nhận theo thời gian (2020–2026)"
+
+    MEASURE ban_ghi[Ten_trang3] = "Đánh giá mức độ bảo tồn và khoảng trống đánh giá IUCN của loài nguy cấp"
+
     // Dòng tiêu đề thông điệp cho từng trang (dùng visual Card)
     MEASURE ban_ghi[Tieu_de_trang1] =
         "Năm tỉnh đầu bảng (" & [Top5_tinh_ten] & ") chiếm " &

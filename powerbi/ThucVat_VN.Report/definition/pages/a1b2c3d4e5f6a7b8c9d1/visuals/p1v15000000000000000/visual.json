@@ -26,7 +26,7 @@
                     "value": "Nguồn: GBIF, thực vật Việt Nam, thu ngày 22/10/2026. Mỗi dòng là một lần ghi nhận, không phải một cây. Số bản ghi phản ánh nơi có người đi ghi nhận, không phải nơi có nhiều cây. 2026* chưa hết năm.",
                     "textStyle": {
                       "fontSize": "10px",
-                      "color": "#7a7974"
+                      "color": "#7b8b86"
                     }
                   }
                 ]
@@ -83,7 +83,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#e4e3df'"
+                      "Value": "'#dfe5e2'"
                     }
                   }
                 }
